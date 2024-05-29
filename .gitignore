@@ -1,0 +1,42 @@
+# ignore by file extensions
+*.class
+*.log*
+*.iml
+*.versionsBackup
+*.DS_Store
+*.pyc
+*.tar.gz
+*.tokens
+*.interp
+
+# ignore specific directories
+.idea
+.repository/
+target
+_build/
+conf/
+gen/
+logs/
+log/
+testlog/
+script/static
+static/
+data/**
+# ignore specific files
+.classpath
+.project
+.settings
+*output
+*output.properties
+.env
+venv/
+**/local-unit-test.properties
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
