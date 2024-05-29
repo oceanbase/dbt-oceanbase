@@ -11,14 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import ContextManager, Tuple, Optional
+from typing import Tuple
 
+from dbt.adapters.contracts.connection import Credentials
 from dbt.adapters.events.logging import AdapterLogger
-from dbt.adapters.sql import SQLConnectionManager
-from dbt_common.exceptions import DbtRuntimeError
-from dbt.adapters.contracts.connection import Connection, ConnectionState, Credentials
 
 log = AdapterLogger("OceanBase")
 
