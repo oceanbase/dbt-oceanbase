@@ -14,6 +14,8 @@
 .repository/
 target
 _build/
+build/
+
 conf/
 gen/
 logs/
