@@ -1,11 +1,11 @@
 # Copyright (c) 2023 OceanBase.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,10 @@ try:
 except ImportError:
     # the user has a downlevel version of setuptools.
     print("Error: dbt requires setuptools v40.1.0 or higher.")
-    print('Please upgrade setuptools with "pip install --upgrade setuptools" ' "and try again")
+    print(
+        'Please upgrade setuptools with "pip install --upgrade setuptools" '
+        "and try again"
+    )
     sys.exit(1)
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
@@ -61,7 +64,7 @@ setup(
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9"
+        "Programming Language :: Python :: 3.9",
     ],
     python_requires=">=3.8",
 )

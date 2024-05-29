@@ -1,11 +1,11 @@
 # Copyright (c) 2023 OceanBase.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,13 +23,14 @@ from dbt.adapters.contracts.connection import Connection, ConnectionState, Crede
 log = AdapterLogger("OceanBase")
 
 OBMySQL_DIALECT_TYPE = "oceanbase_mysql"
-OBOracle_DIALECT_TYPE = "oceanbase_mysql"
+OBOracle_DIALECT_TYPE = "oceanbase_oracle"
+
 
 @dataclass
 class OBMySQLCredentials(Credentials):
 
     host: str
-    port: int # [0-65535]
+    port: int  # [0-65535]
     user: str
     password: str
     connect_timeout_seconds = 10
@@ -44,7 +45,7 @@ class OBMySQLCredentials(Credentials):
         "passwd": "password",
         "username": "user",
         "connect_timeout": "connect_timeout_seconds",
-        "retry_times": "retries"
+        "retry_times": "retries",
     }
 
     @property
@@ -58,6 +59,7 @@ class OBMySQLCredentials(Credentials):
     """
     just for pretty printing
     """
+
     def _connection_keys(self) -> Tuple[str, ...]:
         return (
             "host",
@@ -67,5 +69,5 @@ class OBMySQLCredentials(Credentials):
             "connect_timeout_seconds",
             "retries",
             "database",
-            "schema"
+            "schema",
         )
