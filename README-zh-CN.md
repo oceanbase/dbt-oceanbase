@@ -10,7 +10,7 @@
 ```shell
 pip3 install dbt-oceanbase
 ```
-目前兼容的 [dbt-core](https://github.com/dbt-labs/dbt-core) 最新版本为 1.8.0b2，我们将努力保证 dbt-oceanbase 与 dbt-core 最新版本之间的兼容性。欢迎您给我们提交 [Issues](https://github.com/oceanbase/odc/issues) 以及 [PR](https://github.com/oceanbase/odc/pulls)
+目前兼容的 [dbt-core](https://github.com/dbt-labs/dbt-core) 最新版本为 1.8.0b2，我们将努力保证 dbt-oceanbase 与 dbt-core 最新版本之间的兼容性。欢迎您给我们提交 [Issues](https://github.com/oceanbase/dbt-oceanbase/issues) 以及 [PR](https://github.com/oceanbase/dbt-oceanbase/pulls)
 
 ## 快速开始
 
