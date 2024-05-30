@@ -27,7 +27,6 @@ from dbt.adapters.contracts.connection import (
 from dbt.adapters.events.logging import AdapterLogger
 from dbt.adapters.sql import SQLConnectionManager
 
-import socket
 log = AdapterLogger("OceanBase")
 
 OBMySQL_DIALECT_TYPE = "oceanbase_mysql"
@@ -147,6 +146,4 @@ class OBMySQLConnectionManager(SQLConnectionManager):
         # there is no way to get info from cursor before fetch
         code = "SUCCESS"
         rows_affected = -1
-        return AdapterResponse(
-            _message="{0}-{1}".format(code, rows_affected), rows_affected=rows_affected, code=code
-        )
+        return AdapterResponse(_message="{0}-{1}".format(code, rows_affected), rows_affected=rows_affected, code=code)
