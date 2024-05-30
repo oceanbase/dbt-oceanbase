@@ -4,13 +4,13 @@ labels: [type-bug, priority-medium]
 title: "[Bug]: "
 body:
   - type: textarea
-    id: dbt_oceanbase version
+    id: dbt-oceanbase_version
     attributes:
-      label: dbt_oceanbase version
+      label: dbt-oceanbase version
       placeholder: |
         Enter the version, e.g. 4.2.0
       description: |
-        To submit a bug, you need to specify the version of dbt_oceanbase, find the version by: Help -> About Develop Center
+        To submit a bug, you need to specify the version of dbt-oceanbase, find the version by: Help -> About Develop Center
     validations:
       required: true
 
