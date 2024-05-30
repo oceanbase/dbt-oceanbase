@@ -27,6 +27,7 @@ from dbt.adapters.contracts.connection import (
 from dbt.adapters.events.logging import AdapterLogger
 from dbt.adapters.sql import SQLConnectionManager
 
+import socket
 log = AdapterLogger("OceanBase")
 
 OBMySQL_DIALECT_TYPE = "oceanbase_mysql"
