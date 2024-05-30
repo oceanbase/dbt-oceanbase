@@ -146,4 +146,6 @@ class OBMySQLConnectionManager(SQLConnectionManager):
         # there is no way to get info from cursor before fetch
         code = "SUCCESS"
         rows_affected = -1
-        return AdapterResponse(_message="{0}-{1}".format(code, rows_affected), rows_affected=rows_affected, code=code)
+        return AdapterResponse(
+            _message="{0}-{1}".format(code, rows_affected), rows_affected=rows_affected, code=code
+        )
