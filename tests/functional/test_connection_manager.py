@@ -32,6 +32,7 @@ class TestOBMySQLConnectionManager:
         assert conn.state == ConnectionState.OPEN
         assert hasattr(conn, "connection_id") is True
         assert conn.connection_id is not None
+        OBMySQLConnectionManager.close(conn)
 
     def test_get_response_execute_sql_succeed(self, ob_mysql_connection):
         with ob_mysql_connection.cursor() as cursor:
