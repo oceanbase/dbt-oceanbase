@@ -62,9 +62,8 @@ class OBMySQLCredentials(Credentials):
             "host",
             "port",
             "user",
-            "password",
-            "connect_timeout_seconds",
             "retries",
-            "database",
             "schema",
+            "database",
+            "connect_timeout_seconds",
         )

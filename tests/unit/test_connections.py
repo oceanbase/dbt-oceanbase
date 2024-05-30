@@ -11,15 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Any, Dict
 from unittest import TestCase
 
 from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
 
 
-class TestOceanBaseCredentials(TestCase):
+class TestOBMySQLCredentials(TestCase):
 
     def setUp(self):
-        self.profileData = {
+        self.profile_data: Dict[str, Any] = {
             "dbname": "test",
             "schema": "test",
             "host": "127.0.0.1",
@@ -28,10 +29,9 @@ class TestOceanBaseCredentials(TestCase):
             "pass": "test_pass",
         }
 
-    def test_initCredentials_fromDict_initSucceed(self):
-        data = OBMySQLCredentials.translate_aliases(self.profileData)
+    def test_init_credentials_from_dict_succeed(self):
+        data = OBMySQLCredentials.translate_aliases(self.profile_data)
         OBMySQLCredentials.validate(data)
         expect = OBMySQLCredentials(**data)
         actual = OBMySQLCredentials.from_dict(data)
-        print(actual.type)
-        self.assertEqual(actual, expect)
+        self.assertEqual(expect, actual)
