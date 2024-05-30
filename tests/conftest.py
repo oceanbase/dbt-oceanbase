@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-pytest_plugins = ["dbt.tests.fixtures.project", "tests.functional.fixtures"]
+pytest_plugins = ["dbt.tests.fixtures.project"]
