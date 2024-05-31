@@ -1,0 +1,40 @@
+###
+# This workflow is used for daily development
+# Triggers:
+#   1. Push
+#   2. Pull-Request
+# Jobs:
+#   1. Check Code Format
+#   2. Maven Install and PMD Scan
+#   3. Unit Test (executed by OBFarm and triggered when Pull-Request)
+###
+
+name: Build Dev
+run-name: ${{ github.event_name }} triggered by ${{ github.actor }} 🚀
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  check-format:
+    name: Check Code Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout workspace
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+      - name: Install python dependencies
+        run: |
+          pip3 install -r dev-requirements.txt
+      - name: Check unused imports
+        run: autoflake --remove-all-unused-imports --in-place --check --recursive .
+      - name: Check code format
+        run: black --check .

@@ -1,16 +1,16 @@
 name: 🐞 Bug Report
-description: Report a bug encountered while operating ODC
+description: Report a bug encountered while using dbt-oceanbase
 labels: [type-bug, priority-medium]
 title: "[Bug]: "
 body:
   - type: textarea
-    id: odcversion
+    id: dbt-oceanbase_version
     attributes:
-      label: ODC version
+      label: dbt-oceanbase version
       placeholder: |
         Enter the version, e.g. 4.2.0
       description: |
-        To submit a bug, you need to specify the version of ODC, find the version by: Help -> About Develop Center
+        To submit a bug, you need to specify the version of dbt-oceanbase, find the version by: Help -> About Develop Center
     validations:
       required: true
 
