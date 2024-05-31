@@ -15,6 +15,8 @@ import dataclasses
 
 import pytest
 
+import socket
+
 from dbt.adapters.contracts.connection import (
     AdapterResponse,
     Connection,
@@ -63,7 +65,11 @@ class TestOBMySQLConnectionManager(BaseOBMySQLTestCase):
             actual, _ = connection_manager.execute("select 1 from dual")
             code = "SUCCESS"
             rows_affected = -1
-            expect = AdapterResponse( _message="{0}-{1}".format(code, rows_affected),code=code,  rows_affected=rows_affected, )
+            expect = AdapterResponse(
+                _message="{0}-{1}".format(code, rows_affected),
+                code=code,
+                rows_affected=rows_affected,
+            )
             assert actual == expect
         finally:
             connection_manager.release()
