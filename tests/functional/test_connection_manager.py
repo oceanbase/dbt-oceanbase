@@ -15,7 +15,6 @@ import dataclasses
 
 import pytest
 
-import socket
 
 from dbt.adapters.contracts.connection import (
     AdapterResponse,
