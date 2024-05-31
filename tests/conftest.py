@@ -31,7 +31,7 @@ OB_MYSQL_TEST_DATABASE_KEY = "OB_MYSQL_TEST_DATABASE"
 pytest_plugins = ["dbt.tests.fixtures.project"]
 
 
-@pytest.fixture(autouse=True, scope="session")
+@pytest.fixture(scope="session")
 def ob_mysql_credentials() -> OBMySQLCredentials:
     kwargs = {}
     kwargs.update({"host": os.getenv(OB_MYSQL_TEST_HOST_KEY)})
@@ -60,7 +60,7 @@ def ob_mysql_credentials() -> OBMySQLCredentials:
             cursor.fetchone()
 
 
-@pytest.fixture(autouse=True, scope="session")
+@pytest.fixture(scope="session")
 def ob_mysql_connection(ob_mysql_credentials: OBMySQLCredentials):
     kwargs = {
         "host": ob_mysql_credentials.host,

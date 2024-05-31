@@ -89,9 +89,9 @@ class OBMySQLConnectionManager(SQLConnectionManager):
             yield
         except Exception as e:
             log.warning("Failed to run SQL: {}".format(sql))
-            log.warning("Rolling back transaction")
             try:
                 self.rollback_if_open()
+                log.warning("Roll back transaction succeed")
             except Exception:
                 log.warning("Failed to rollback transaction")
             if isinstance(e, DbtRuntimeError):
