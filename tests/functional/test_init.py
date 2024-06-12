@@ -15,8 +15,11 @@ import os.path
 import shutil
 import unittest.mock
 
+import yaml
+
 from dbt.adapters.oceanbase_mysql import OBMySQLCredentials
 from dbt.cli.main import dbtRunner, dbtRunnerResult
+from dbt.flags import get_flags
 
 
 class TestInit:
@@ -52,6 +55,25 @@ class TestInit:
                 },
             )
             assert dbtRunnerResult(success=True) == actual
+            with open(os.path.join(get_flags().PROFILES_DIR, "profiles.yml")) as f:
+                profile = yaml.safe_load(f)
+                assert project_name in profile
+                actual = profile.get(project_name, {})
+                expect = {
+                    "outputs": {
+                        "dev": {
+                            "host": ob_mysql_credentials.host,
+                            "pass": ob_mysql_credentials.password,
+                            "threads": 1,
+                            "user": ob_mysql_credentials.user,
+                            "type": "oceanbase_mysql",
+                            "port": ob_mysql_credentials.port,
+                            "database": ob_mysql_credentials.database,
+                        }
+                    },
+                    "target": "dev",
+                }
+                assert expect == actual
         finally:
             if os.getcwd().endswith(project_name):
                 shutil.rmtree(os.getcwd())
