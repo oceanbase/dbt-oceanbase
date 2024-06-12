@@ -60,9 +60,10 @@ def ob_mysql_credentials() -> OBMySQLCredentials:
     )
     yield OBMySQLCredentials.from_dict(kwargs)
     kwargs.pop("schema")
+    kwargs.update({"database": "test"})
     with mysql.connector.connect(**kwargs) as conn:
         with conn.cursor() as cursor:
-            cursor.execute("drop database {};".format(database))
+            cursor.execute("drop database if exists {};".format(database))
             cursor.fetchone()
 
 

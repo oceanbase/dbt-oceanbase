@@ -28,6 +28,8 @@ class BaseOBMySQLTestCase:
     @pytest.fixture(scope="class")
     def dbt_profile_target(self, ob_mysql_credentials: OBMySQLCredentials):
         kwargs = ob_mysql_credentials.to_dict()
+        for k in OBMySQLCredentials._ALIASES.keys():
+            kwargs.pop(k, {})
         kwargs.update(
             {
                 "type": OBMySQL_DIALECT_TYPE,
