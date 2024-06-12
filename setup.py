@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import re
 import sys
 
 if sys.version_info < (3, 8):
@@ -33,8 +34,21 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(this_directory, "README.md")) as f:
     long_description = f.read()
 
+
+def _dbt_oceanbase_version():
+    _version_path = os.path.join(
+        this_directory, "dbt", "adapters", "oceanbase_mysql", "__version__.py"
+    )
+    _version_pattern = r"""version\s*=\s*["'](.+)["']"""
+    with open(_version_path) as f:
+        match = re.search(_version_pattern, f.read().strip())
+        if match is None:
+            raise ValueError(f"invalid version at {_version_path}")
+        return match.group(1)
+
+
 package_name = "dbt-oceanbase"
-package_version = "1.0.0"
+package_version = _dbt_oceanbase_version()
 description = """The OceanBase adapter plugin for dbt"""
 
 setup(
