@@ -13,8 +13,10 @@
 # limitations under the License.
 import pytest
 
-from dbt.adapters.oceanbase_mysql.connections import (OBMySQL_DIALECT_TYPE,
-                                                      OBMySQLCredentials)
+from dbt.adapters.oceanbase_mysql.connections import (
+    OBMySQL_DIALECT_TYPE,
+    OBMySQLCredentials,
+)
 
 
 class BaseOBMySQLTestCase:

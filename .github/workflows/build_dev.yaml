@@ -36,5 +36,7 @@ jobs:
           pip3 install -r dev-requirements.txt
       - name: Check unused imports
         run: autoflake --remove-all-unused-imports --in-place --check --recursive .
+      - name: Check imports sort
+        run: isort --check .
       - name: Check code format
         run: black --check .

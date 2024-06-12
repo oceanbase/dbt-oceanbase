@@ -16,11 +16,17 @@ import dataclasses
 import pytest
 from dbt_common.exceptions import DbtRuntimeError
 
-from dbt.adapters.contracts.connection import (AdapterResponse, Connection,
-                                               ConnectionState, Credentials,
-                                               HasCredentials)
-from dbt.adapters.oceanbase_mysql.connections import (OBMySQLConnectionManager,
-                                                      OBMySQLCredentials)
+from dbt.adapters.contracts.connection import (
+    AdapterResponse,
+    Connection,
+    ConnectionState,
+    Credentials,
+    HasCredentials,
+)
+from dbt.adapters.oceanbase_mysql.connections import (
+    OBMySQLConnectionManager,
+    OBMySQLCredentials,
+)
 from dbt.mp_context import get_mp_context
 from tests.functional.utils import BaseOBMySQLTestCase
 
