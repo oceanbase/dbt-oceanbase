@@ -14,10 +14,10 @@
 from unittest import TestCase
 
 import pytest
-from dbt.adapters.contracts.relation import Path
-from dbt.adapters.exceptions import ApproximateMatchError
 from dbt_common.exceptions import DbtRuntimeError
 
+from dbt.adapters.contracts.relation import Path
+from dbt.adapters.exceptions import ApproximateMatchError
 from dbt.adapters.oceanbase_mysql.relation import OBMySQLRelation
 
 

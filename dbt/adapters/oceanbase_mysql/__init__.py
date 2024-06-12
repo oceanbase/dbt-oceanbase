@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from dbt.adapters.base import AdapterPlugin
-
+from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
 from dbt.adapters.oceanbase_mysql.impl import OBMySQLAdapter
 from dbt.include import oceanbase_mysql
-from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
 
 Plugin = AdapterPlugin(
     adapter=OBMySQLAdapter,

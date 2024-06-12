@@ -14,14 +14,14 @@
 from typing import Type
 
 import agate
-from dbt.adapters.base import BaseRelation, BaseConnectionManager, ConstraintSupport
-from dbt.adapters.sql import SQLAdapter
 from dbt_common.contracts.constraints import ConstraintType
 
+from dbt.adapters.base import (BaseConnectionManager, BaseRelation, Column,
+                               ConstraintSupport)
 from dbt.adapters.oceanbase_mysql.column import OBMySQLColumn
 from dbt.adapters.oceanbase_mysql.connections import OBMySQLConnectionManager
 from dbt.adapters.oceanbase_mysql.relation import OBMySQLRelation
-from dbt.adapters.base import Column
+from dbt.adapters.sql import SQLAdapter
 
 
 class OBMySQLAdapter(SQLAdapter):
