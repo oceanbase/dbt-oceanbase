@@ -13,11 +13,12 @@
 # limitations under the License.
 from dataclasses import dataclass, field
 
-from dbt_common.exceptions import DbtRuntimeError
 
 from dbt.adapters.base import BaseRelation
 from dbt.adapters.base.relation import SerializableIterable
 from dbt.adapters.contracts.relation import Path, RelationType
+
+from dbt_common.exceptions import DbtRuntimeError
 
 
 @dataclass(frozen=True, repr=False, eq=False)
