@@ -21,6 +21,7 @@ import mysql.connector
 import pytest
 
 from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
+from dbt.cli.main import dbtRunner
 
 OB_MYSQL_TEST_HOST_KEY = "OB_MYSQL_TEST_HOST"
 OB_MYSQL_TEST_PORT_KEY = "OB_MYSQL_TEST_PORT"
@@ -29,6 +30,11 @@ OB_MYSQL_TEST_PASSWD_KEY = "OB_MYSQL_TEST_PASSWD"
 OB_MYSQL_TEST_DATABASE_KEY = "OB_MYSQL_TEST_DATABASE"
 
 pytest_plugins = ["dbt.tests.fixtures.project"]
+
+
+@pytest.fixture(scope="class")
+def dbt():
+    return dbtRunner()
 
 
 @pytest.fixture(scope="session")
