@@ -51,12 +51,7 @@ class TestInit:
                     "project_name": project_name,
                 },
             )
-            expect = dbtRunnerResult(
-                **{
-                    "success": True,
-                }
-            )
-            assert expect == actual
+            assert dbtRunnerResult(success=True) == actual
         finally:
             if os.getcwd().endswith(project_name):
                 shutil.rmtree(os.getcwd())
