@@ -39,4 +39,4 @@ class BaseOBMySQLTestCase:
 
     @pytest.fixture(scope="class")
     def project_config_update(self):
-        return {"name": "example", "models": {"+materialized": "view"}}
+        return {"models": {"+materialized": "view"}}
