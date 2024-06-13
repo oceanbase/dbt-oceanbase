@@ -18,10 +18,10 @@ from dbt.adapters.oceanbase_mysql.connections import (
     OBMySQLCredentials,
 )
 
+COUNT = 0
+
 
 class BaseOBMySQLTestCase:
-
-    __COUNT = 0
 
     @pytest.fixture(scope="class")
     def unique_schema(self, dbt_profile_target) -> str:
@@ -32,8 +32,9 @@ class BaseOBMySQLTestCase:
         kwargs = ob_mysql_credentials.to_dict()
         for k in OBMySQLCredentials._ALIASES.keys():
             kwargs.pop(k, {})
-        self.__COUNT = self.__COUNT + 1
-        database = f"{ob_mysql_credentials.database}_{self.__COUNT}"
+        global COUNT
+        COUNT = COUNT + 1
+        database = f"{ob_mysql_credentials.database}_{COUNT}"
         with ob_mysql_connection.cursor() as cursor:
             cursor.execute("create database {};".format(database))
             cursor.fetchone()
