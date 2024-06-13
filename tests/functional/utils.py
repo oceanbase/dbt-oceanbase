@@ -36,7 +36,3 @@ class BaseOBMySQLTestCase:
             }
         )
         return kwargs
-
-    @pytest.fixture(scope="class")
-    def project_config_update(self):
-        return {"models": {"+materialized": "view"}}

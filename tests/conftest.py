@@ -81,6 +81,11 @@ def ob_mysql_connection(ob_mysql_credentials: OBMySQLCredentials):
     conn.close()
 
 
+@pytest.fixture(scope="class")
+def project_config_update():
+    return {"models": {"+materialized": "view"}}
+
+
 def generate_tmp_schema_name():
     hostname = socket.gethostname()
     hostname = re.sub(r"[\.\-\s]", "", hostname)
