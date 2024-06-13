@@ -1,0 +1,5 @@
+config-version: 2
+name: dbt_oceanbase_mysql
+version: 1.0
+
+macro-paths: ["macros"]

@@ -11,13 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from dbt.adapters.base import AdapterPlugin
-from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
-from dbt.adapters.oceanbase_mysql.impl import OBMySQLAdapter
-from dbt.include import oceanbase_mysql
+from dbt.adapters.base import Column
 
-Plugin = AdapterPlugin(
-    adapter=OBMySQLAdapter,
-    credentials=OBMySQLCredentials,
-    include_path=oceanbase_mysql.PACKAGE_PATH,
-)
+
+class OBMySQLColumn(Column):
+
+    @property
+    def quoted(self) -> str:
+        return "`{}`".format(self.column)

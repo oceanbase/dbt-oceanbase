@@ -13,7 +13,10 @@
 # limitations under the License.
 import pytest
 
-from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials, OBMySQL_DIALECT_TYPE
+from dbt.adapters.oceanbase_mysql.connections import (
+    OBMySQL_DIALECT_TYPE,
+    OBMySQLCredentials,
+)
 
 
 class BaseOBMySQLTestCase:
@@ -25,6 +28,8 @@ class BaseOBMySQLTestCase:
     @pytest.fixture(scope="class")
     def dbt_profile_target(self, ob_mysql_credentials: OBMySQLCredentials):
         kwargs = ob_mysql_credentials.to_dict()
+        for k in OBMySQLCredentials._ALIASES.keys():
+            kwargs.pop(k, {})
         kwargs.update(
             {
                 "type": OBMySQL_DIALECT_TYPE,
@@ -34,4 +39,4 @@ class BaseOBMySQLTestCase:
 
     @pytest.fixture(scope="class")
     def project_config_update(self):
-        return {"name": "example", "models": {"+materialized": "view"}}
+        return {"models": {"+materialized": "view"}}

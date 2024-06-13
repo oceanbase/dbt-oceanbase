@@ -14,8 +14,10 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Any, ContextManager, Tuple
+
 import mysql
 from dbt_common.exceptions import DbtRuntimeError
+
 from dbt.adapters.contracts.connection import (
     AdapterResponse,
     Connection,

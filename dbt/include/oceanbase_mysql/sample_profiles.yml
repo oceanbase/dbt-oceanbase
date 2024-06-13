@@ -1,0 +1,22 @@
+default:
+  outputs:
+
+    dev:
+      type: oceanbase_mysql
+      threads: [1 or more]
+      host: [host]
+      port: [port]
+      user: [dev_username]
+      pass: [dev_password]
+      dbname: [dbname]
+
+    prod:
+      type: oceanbase_mysql
+      threads: [1 or more]
+      host: [host]
+      port: [port]
+      user: [prod_username]
+      pass: [prod_password]
+      dbname: [dbname]
+
+  target: dev

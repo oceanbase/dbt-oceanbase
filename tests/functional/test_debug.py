@@ -11,13 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from dbt.adapters.base import AdapterPlugin
-from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
-from dbt.adapters.oceanbase_mysql.impl import OBMySQLAdapter
-from dbt.include import oceanbase_mysql
+from dbt.cli.main import dbtRunner, dbtRunnerResult
+from tests.functional.utils import BaseOBMySQLTestCase
 
-Plugin = AdapterPlugin(
-    adapter=OBMySQLAdapter,
-    credentials=OBMySQLCredentials,
-    include_path=oceanbase_mysql.PACKAGE_PATH,
-)
+
+class TestDebug(BaseOBMySQLTestCase):
+
+    def test_debug_succeed(self, project, dbt: dbtRunner):
+        res = dbt.invoke(args=["debug"])
+        assert dbtRunnerResult(success=True, result=True) == res
