@@ -13,7 +13,7 @@
 # limitations under the License.
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Any, ContextManager, Tuple
+from typing import Any, ContextManager, Dict, Tuple
 
 import mysql
 from dbt_common.exceptions import DbtRuntimeError
@@ -77,6 +77,23 @@ class OBMySQLCredentials(Credentials):
             "database",
             "connect_timeout_seconds",
         )
+
+    def __post_init__(self):
+        if self.schema is None and self.database is None:
+            raise DbtRuntimeError("The schema and database can not be both null")
+        if self.schema is None:
+            self.schema = self.database
+        elif self.database is None:
+            self.database = self.schema
+
+    @classmethod
+    def translate_aliases(cls, kwargs: Dict[str, Any], recurse: bool = False) -> Dict[str, Any]:
+        data = super().translate_aliases(kwargs, recurse)
+        if "schema" not in data:
+            data.update({"schema": data.get("database", None)})
+        elif "database" not in data:
+            data.update({"database": data.get("schema", None)})
+        return data
 
 
 class OBMySQLConnectionManager(SQLConnectionManager):
