@@ -17,21 +17,31 @@ from dbt.adapters.oceanbase_mysql.connections import (
     OBMySQL_DIALECT_TYPE,
     OBMySQLCredentials,
 )
+from tests.conftest import generate_tmp_schema_name
 
 
 class BaseOBMySQLTestCase:
 
-    @pytest.fixture(scope="class")
-    def unique_schema(self, ob_mysql_credentials: OBMySQLCredentials) -> str:
-        return ob_mysql_credentials.schema
+    __COUNT = 0
 
     @pytest.fixture(scope="class")
-    def dbt_profile_target(self, ob_mysql_credentials: OBMySQLCredentials):
+    def unique_schema(self, dbt_profile_target) -> str:
+        return dbt_profile_target["schema"]
+
+    @pytest.fixture(scope="class")
+    def dbt_profile_target(self, ob_mysql_credentials: OBMySQLCredentials, ob_mysql_connection):
         kwargs = ob_mysql_credentials.to_dict()
         for k in OBMySQLCredentials._ALIASES.keys():
             kwargs.pop(k, {})
+        self.__COUNT = self.__COUNT + 1
+        database = f"{generate_tmp_schema_name()}_{self.__COUNT}"
+        with ob_mysql_connection.cursor() as cursor:
+            cursor.execute("create database {};".format(database))
+            cursor.fetchone()
         kwargs.update(
             {
+                "database": database,
+                "schema": database,
                 "type": OBMySQL_DIALECT_TYPE,
             }
         )
