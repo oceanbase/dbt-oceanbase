@@ -17,7 +17,6 @@ from dbt.adapters.oceanbase_mysql.connections import (
     OBMySQL_DIALECT_TYPE,
     OBMySQLCredentials,
 )
-from tests.conftest import generate_tmp_schema_name
 
 
 class BaseOBMySQLTestCase:
@@ -34,7 +33,7 @@ class BaseOBMySQLTestCase:
         for k in OBMySQLCredentials._ALIASES.keys():
             kwargs.pop(k, {})
         self.__COUNT = self.__COUNT + 1
-        database = f"{generate_tmp_schema_name()}_{self.__COUNT}"
+        database = f"{ob_mysql_credentials.database}_{self.__COUNT}"
         with ob_mysql_connection.cursor() as cursor:
             cursor.execute("create database {};".format(database))
             cursor.fetchone()
