@@ -104,3 +104,21 @@ dbt run
 | Docs               |✅| 生成文档 |
 | Seed               |✅| 导入数据 |
 | Snaspshot          |✅| 生成快照 |
+
+### Table
+
+dbt-oceanbase 对表对象进行了针对性的兼容，允许用户最大限度地使用 OceanBase 表地特性。
+
+| 特性        |是否支持| 使用示例                                                                                                                                                                            |
+|:----------|:----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 外表        | ✅ | ` {{ config(external=True) }}`                                                                                                                                                  |
+| 列存        | ✅ | ` {{ config(column_groups=['all columns', 'r_name(col1, col2)']) }}`                                                                                                            |
+| 临时表       | ✅ | ` {{ config(temporary=True) }}`                                                                                                                                                 |
+| contract  | ✅ | ` {{ config(contract={'enforced': True}) }}`                                                                                                                                    |
+| 检查约束（列/表） | ✅ | `constraints.type='check'`                                                                                                                                                      |
+| 非空约束（列/表） | ✅ | `constraints.type='not_null'`                                                                                                                                                   |
+| 唯一约束（列/表） | ✅ | `constraints.type='unique'`                                                                                                                                                     |
+| 主键约束（列/表） | ✅ | `constraints.type='primary_key'`                                                                                                                                                |
+| 外键约束（表）   | ✅ | `constraints.type='foreign_key'`                                                                                                                                                |
+| 表级注释      | ✅ | `models.description='this is the comment'`                                                                                                                                      |
+| 索引        | ✅ | `{{ config(indexes=[{"columns": ["id"],"algorithm": "BTREE", "unique": True, "options": ['GLOBAL'], "name": "idx", "column_groups": ['all columns', 'r_name(col1, col2)']}] }}` |
