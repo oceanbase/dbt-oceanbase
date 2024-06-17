@@ -52,3 +52,10 @@ class OBMySQLRelation(BaseRelation):
             raise DbtRuntimeError(
                 f"The schema '{path.schema}' is not equals to the database '{path.database}'"
             )
+
+    def __str__(self) -> str:
+        relation = self.include(schema=False)
+        return relation.render() if self.limit is None else relation.render_limited()
+
+    def __repr__(self) -> str:
+        return "<{} {}>".format(self.__class__.__name__, self.include(schema=False).render())

@@ -11,12 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import time
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Any, ContextManager, Dict, Tuple
+from typing import Any, ContextManager, Dict, Optional, Tuple, Union
 
 import mysql
+from dbt_common.events.contextvars import get_node_info
+from dbt_common.events.functions import fire_event
 from dbt_common.exceptions import DbtRuntimeError
+from dbt_common.utils import cast_to_str
 
 from dbt.adapters.contracts.connection import (
     AdapterResponse,
@@ -25,6 +29,7 @@ from dbt.adapters.contracts.connection import (
     Credentials,
 )
 from dbt.adapters.events.logging import AdapterLogger
+from dbt.adapters.events.types import ConnectionUsed, SQLQuery, SQLQueryStatus
 from dbt.adapters.sql import SQLConnectionManager
 
 log = AdapterLogger("OceanBase")
@@ -158,6 +163,48 @@ class OBMySQLConnectionManager(SQLConnectionManager):
         res = cursor.fetchone()
         log.debug("Cancel query '{}': {}".format(connection_name, res))
 
+    def add_query(
+        self,
+        sql: str,
+        auto_begin: bool = True,
+        bindings: Optional[Any] = None,
+        abridge_sql_log: bool = False,
+    ) -> Tuple[Connection, Any]:
+        connection = self.get_thread_connection()
+        if auto_begin and connection.transaction_open is False:
+            self.begin()
+        fire_event(
+            ConnectionUsed(
+                conn_type=self.TYPE,
+                conn_name=cast_to_str(connection.name),
+                node_info=get_node_info(),
+            )
+        )
+        with self.exception_handler(sql):
+            if abridge_sql_log:
+                log_sql = "{}...".format(sql[:512])
+            else:
+                log_sql = sql
+            fire_event(
+                SQLQuery(
+                    conn_name=cast_to_str(connection.name),
+                    sql=log_sql,
+                    node_info=get_node_info(),
+                )
+            )
+            pre = time.time()
+            cursor = connection.handle.cursor()
+            for item in cursor.execute(sql, bindings, multi=True):
+                last_cursor = item
+            fire_event(
+                SQLQueryStatus(
+                    status=str(self.get_response(cursor)),
+                    elapsed=round((time.time() - pre)),
+                    node_info=get_node_info(),
+                )
+            )
+            return connection, last_cursor
+
     @classmethod
     def get_response(cls, cursor: Any) -> AdapterResponse:
         # there is no way to get info from cursor before fetch
@@ -166,3 +213,9 @@ class OBMySQLConnectionManager(SQLConnectionManager):
         return AdapterResponse(
             _message="{0}-{1}".format(code, rows_affected), rows_affected=rows_affected, code=code
         )
+
+    @classmethod
+    def data_type_code_to_name(cls, type_code: Union[int, str]) -> str:
+        field_type_values = mysql.connector.constants.FieldType.desc.values()
+        mapping = {code: name for code, name in field_type_values}
+        return mapping[type_code]
