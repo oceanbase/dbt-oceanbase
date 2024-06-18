@@ -122,3 +122,12 @@ dbt-oceanbase 对表对象进行了针对性的兼容，允许用户最大限度
 | 外键约束（表）   | ✅ | `constraints.type='foreign_key'`                                                                                                                                                |
 | 表级注释      | ✅ | `models.description='this is the comment'`                                                                                                                                      |
 | 索引        | ✅ | `{{ config(indexes=[{"columns": ["id"],"algorithm": "BTREE", "unique": True, "options": ['GLOBAL'], "name": "idx", "column_groups": ['all columns', 'r_name(col1, col2)']}] }}` |
+
+### View
+
+| 特性           |是否支持| 使用示例                                              |
+|:-------------|:----|:--------------------------------------------------|
+| contract     | ✅ | ` {{ config(contract={'enforced': True}) }}`      |
+| columns      | ✅ | ` {{ config(columns=['col1', 'col2']) }}`         |
+| check option | ✅ | ` {{ config(check_option="with check option") }}` |
+| 表级注释         | ✅ | `models.description='this is the comment'`        |

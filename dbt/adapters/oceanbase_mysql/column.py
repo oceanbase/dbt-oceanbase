@@ -11,11 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict
+
 from dbt.adapters.base import Column
 
 
 class OBMySQLColumn(Column):
 
+    _CAST_TYPE_ALIAS: Dict[str, str] = {
+        "int": "signed integer",
+        "bigint": "signed integer",
+        "nchar": "character",
+        "char": "character",
+        "varchar": "character",
+    }
+
     @property
     def quoted(self) -> str:
         return "`{}`".format(self.column)
+
+    @classmethod
+    def translate_cast_type(cls, dtype: str) -> str:
+        return cls._CAST_TYPE_ALIAS.get(dtype, dtype)

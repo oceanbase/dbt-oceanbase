@@ -108,3 +108,7 @@ class OBMySQLAdapter(SQLAdapter):
             return OBMySQLIndex.from_dict(raw_index)
         except Exception as e:
             raise DbtValidationError(f"Could not parse constraint: {raw_index}")
+
+    @available
+    def translate_cast_type(self, dtype: str) -> str:
+        return OBMySQLColumn.translate_cast_type(dtype)
