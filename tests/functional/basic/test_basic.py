@@ -15,6 +15,7 @@ import pytest
 
 from dbt.adapters.base import BaseAdapter
 from dbt.cli.main import dbtRunner, dbtRunnerResult
+from dbt.tests.adapter.basic.test_empty import BaseEmpty
 from tests.functional.utils import BaseOBMySQLTestCase
 
 _MODEL_SQL = """
@@ -72,3 +73,7 @@ class TestRunSimpleModel(BaseOBMySQLTestCase):
         with adapter.connection_named("test"):
             _, table = adapter.execute("show tables", fetch=True)
             assert ["my_first_model"] == [row.values()[0] for row in table.rows]
+
+
+class TestEmpty(BaseEmpty, BaseOBMySQLTestCase):
+    pass
