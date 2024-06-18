@@ -92,11 +92,7 @@
         {%- do col_err.append(col['name']) -%}
       {%- endif -%}
       {% set col_name = adapter.quote(col['name']) if col.get('quote') else col['name'] %}
-      {%- if col['data_type'].strip().lower() in ('int', 'bigint') -%}
-        cast(null as signed integer) as {{ col_name }}{{ ", " if not loop.last }}
-      {% else %}
-        cast(null as {{ col['data_type'] }}) as {{ col_name }}{{ ", " if not loop.last }}
-      {%- endif -%}
+      cast(null as {{ adapter.translate_cast_type(col['data_type']) }}) as {{ col_name }}{{ ", " if not loop.last }}
     {%- endfor -%}
     {%- if (col_err | length) > 0 -%}
       {{ exceptions.column_type_missing(column_names=col_err) }}
