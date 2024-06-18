@@ -23,7 +23,10 @@ from tests.functional.utils import BaseOBMySQLTestCase
 
 _MODEL_SQL = """
 
-{{ config(materialized='view', contract={'enforced': True}) }}
+{{ config(
+    materialized='view',     
+    persist_docs={"relation": True},
+    contract={'enforced': True}) }}
 
     select 1 as id union all select 2 as id
 
@@ -37,6 +40,7 @@ models:
       materialized: view
       contract:
         enforced: true
+    description: "this is comment"
     columns:
       - name: id
         quote: True
@@ -55,6 +59,7 @@ models:
       materialized: view
       contract:
         enforced: true
+    description: "this is comment"
     columns:
       - name: id
         quote: True
