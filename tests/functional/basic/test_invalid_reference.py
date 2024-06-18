@@ -38,6 +38,12 @@ class TestInvalidReference(BaseOBMySQLTestCase):
             "model.sql": model_sql,
         }
 
-    def test_undefined_value(self, project, dbt: dbtRunner):
-        with pytest.raises(CompilationError):
-            run_dbt(args=["compile"])
+    def test_undefined_value(
+        self, project, dbt: dbtRunner, dbt_profile_target, ob_mysql_connection
+    ):
+        try:
+            with pytest.raises(CompilationError):
+                run_dbt(args=["compile"])
+        finally:
+            with ob_mysql_connection.cursor() as cursor:
+                cursor.execute(f"drop database {dbt_profile_target['database']}")
