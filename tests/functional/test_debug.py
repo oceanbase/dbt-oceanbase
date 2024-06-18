@@ -17,6 +17,10 @@ from tests.functional.utils import BaseOBMySQLTestCase
 
 class TestDebug(BaseOBMySQLTestCase):
 
-    def test_debug_succeed(self, project, dbt: dbtRunner):
-        res = dbt.invoke(args=["debug"])
-        assert dbtRunnerResult(success=True, result=True) == res
+    def test_debug_succeed(self, project, dbt: dbtRunner, dbt_profile_target, ob_mysql_connection):
+        try:
+            res = dbt.invoke(args=["debug"])
+            assert dbtRunnerResult(success=True, result=True) == res
+        finally:
+            with ob_mysql_connection.cursor() as cursor:
+                cursor.execute(f"drop database {dbt_profile_target['database']}")
