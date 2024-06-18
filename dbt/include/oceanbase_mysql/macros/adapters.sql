@@ -120,3 +120,7 @@
     {% endcall %}
     {{ return(load_result('list_indexes').table) }}
 {% endmacro %}
+
+{%- macro oceanbase_mysql__get_drop_index_sql(relation, index_name) -%}
+    drop index `{{ index_name }}` on {{ relation }}
+{%- endmacro -%}

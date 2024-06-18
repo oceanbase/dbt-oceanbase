@@ -26,6 +26,7 @@ from dbt.adapters.base import ConstraintSupport, available
 from dbt.adapters.oceanbase_mysql.column import OBMySQLColumn
 from dbt.adapters.oceanbase_mysql.connections import OBMySQLConnectionManager
 from dbt.adapters.oceanbase_mysql.relation import OBMySQLRelation
+from dbt.adapters.relation_configs import RelationConfigChangeAction
 from dbt.adapters.sql import SQLAdapter
 
 
@@ -33,11 +34,11 @@ from dbt.adapters.sql import SQLAdapter
 class OBMySQLIndex(dbtClassMixin):
 
     columns: List[str]
-    algorithm: str = field(default=None)
+    algorithm: Optional[str] = field(default=None, compare=False)
     unique: Optional[bool] = None
-    name: str = field(default=None)
-    options: List[str] = field(default=None)
-    column_groups: List[str] = field(default=None)
+    name: Optional[str] = field(default=None)
+    options: Optional[List[str]] = field(default=None, compare=False)
+    column_groups: Optional[List[str]] = field(default=None, compare=False)
 
     def get_name(self, relation: BaseRelation):
         if self.name is not None:
@@ -107,7 +108,7 @@ class OBMySQLAdapter(SQLAdapter):
         try:
             OBMySQLIndex.validate(raw_index)
             return OBMySQLIndex.from_dict(raw_index)
-        except Exception as e:
+        except Exception:
             raise DbtValidationError(f"Could not parse constraint: {raw_index}")
 
     @available
@@ -134,3 +135,17 @@ class OBMySQLAdapter(SQLAdapter):
             kwargs.update({"columns": columns})
             relations.append(OBMySQLIndex.from_dict(kwargs))
         return relations
+
+    @available
+    def compare_indexes(
+        self, src: List[OBMySQLIndex], dest: List[OBMySQLIndex]
+    ) -> List[Dict[str, OBMySQLIndex]]:
+        return [
+            {"action": RelationConfigChangeAction.drop, "context": idx}
+            for idx in src
+            if idx not in dest
+        ] + [
+            {"action": RelationConfigChangeAction.create, "context": idx}
+            for idx in dest
+            if idx not in src
+        ]
