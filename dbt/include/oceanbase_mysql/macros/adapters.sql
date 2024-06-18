@@ -149,3 +149,28 @@
     rename table {{ from_relation }} to {{ to_relation }}
   {% endcall %}
 {% endmacro %}
+
+{% macro oceanbase_mysql__create_view_as(relation, sql) -%}
+  {%- set sql_header = config.get('sql_header', none) -%}
+  {%- set columns = config.get('columns', none) -%}
+  {%- set check_option = config.get('check_option', none) -%}
+
+  {{ sql_header if sql_header is not none }}
+  create view {{ relation }}
+    {% if columns is not none %}
+      (
+        {{ ", ".join(columns) }}
+      )
+    {% endif %}
+    {% set contract_config = config.get('contract') %}
+    {% if contract_config.enforced %}
+      {{ get_assert_columns_equivalent(sql) }}
+    {%- endif %}
+  as (
+    {{ sql }}
+  )
+  {% if check_option is not none %}
+    {{ check_option }}
+  {% endif %}
+  ;
+{%- endmacro %}
