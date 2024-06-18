@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import itertools
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Type
 
@@ -112,3 +113,24 @@ class OBMySQLAdapter(SQLAdapter):
     @available
     def translate_cast_type(self, dtype: str) -> str:
         return OBMySQLColumn.translate_cast_type(dtype)
+
+    @available
+    def list_indexes(self, relation: BaseRelation) -> List[OBMySQLIndex]:
+        results = self.execute_macro(
+            "oceanbase_mysql__list_indexes", kwargs={"relation": relation}
+        )
+        relations = []
+        for idx_name, items in itertools.groupby(results, lambda item: item["Key_name"]):
+            kwargs = {"name": idx_name}
+            columns = []
+            for item in items:
+                columns.append(item["Column_name"])
+                kwargs.update(
+                    {
+                        "algorithm": item["Index_type"],
+                        "unique": int(item["Non_unique"]) == 0,
+                    }
+                )
+            kwargs.update({"columns": columns})
+            relations.append(OBMySQLIndex.from_dict(kwargs))
+        return relations

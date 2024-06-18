@@ -109,3 +109,14 @@
     rename table {{ from_relation }} to {{ to_relation }}
   {% endcall %}
 {% endmacro %}
+
+{% macro oceanbase_mysql__get_show_indexes_sql(relation) %}
+    show index from `{{ relation.identifier }}` from `{{ relation.database }}`
+{% endmacro %}
+
+{% macro oceanbase_mysql__list_indexes(relation) %}
+    {% call statement('list_indexes', fetch_result=True, auto_begin=False) %}
+        {{ get_show_indexes_sql(relation) }}
+    {% endcall %}
+    {{ return(load_result('list_indexes').table) }}
+{% endmacro %}
