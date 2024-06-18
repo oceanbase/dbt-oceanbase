@@ -130,4 +130,3 @@ dbt-oceanbase 对表对象进行了针对性的兼容，允许用户最大限度
 | contract     | ✅ | ` {{ config(contract={'enforced': True}) }}`      |
 | columns      | ✅ | ` {{ config(columns=['col1', 'col2']) }}`         |
 | check option | ✅ | ` {{ config(check_option="with check option") }}` |
-| 表级注释         | ✅ | `models.description='this is the comment'`        |
