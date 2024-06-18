@@ -20,23 +20,26 @@
 {% macro oceanbase_mysql__list_relations_without_caching(schema_relation) %}
   {% call statement('list_relations_without_caching', fetch_result=True) -%}
     select
-      '{{ schema_relation.schema }}' as `schema`,
       '{{ schema_relation.database }}' as `database`,
-      table_name as name, 'table' as type
+      table_name as name,
+      '{{ schema_relation.schema }}' as `schema`,
+      'table' as type
     from information_schema.tables
     where table_schema = '{{ schema_relation.schema }}' and table_type = 'BASE TABLE'
     union all
     select
-      '{{ schema_relation.schema }}' as `schema`,
       '{{ schema_relation.database }}' as `database`,
-      table_name as name, 'view' as type
+      table_name as name,
+      '{{ schema_relation.schema }}' as `schema`,
+      'view' as type
     from information_schema.tables
     where table_schema = '{{ schema_relation.schema }}' and table_type like '%VIEW%'
     union all
     select
-      '{{ schema_relation.schema }}' as `schema`,
       '{{ schema_relation.database }}' as `database`,
-      mview_name as name, 'materialized_view' as type
+      mview_name as name,
+      '{{ schema_relation.schema }}' as `schema`,
+      'materialized_view' as type
     from oceanbase.DBA_MVIEWS
     where owner = '{{ schema_relation.schema }}'
   {% endcall %}
