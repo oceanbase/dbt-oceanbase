@@ -46,46 +46,6 @@
   {{ return(load_result('list_relations_without_caching').table) }}
 {% endmacro %}
 
-{% macro oceanbase_mysql__create_table_as(temporary, relation, sql) -%}
-  {%- set external = config.get('external', default=false) -%}
-  {%- set sql_header = config.get('sql_header', none) -%}
-  {%- set column_groups = config.get('column_groups', none) -%}
-
-  {{ sql_header if sql_header is not none }}
-
-  create {% if temporary -%}
-    temporary
-  {%- elif external -%}
-    external
-  {%- endif %} table {{ relation.include(schema=False) }}
-
-  {% if column_groups is not none %}
-    with column group (
-    {%- for column_group in column_groups -%}
-        {{- column_group -}}
-        {{ ", " if not loop.last }}
-    {%- endfor -%}
-    )
-  {% endif %}
-
-  {% set contract_config = config.get('contract') %}
-  {% if contract_config.enforced %}
-    {{ get_assert_columns_equivalent(sql) }}
-  {% endif -%}
-  {% if contract_config.enforced and (not temporary) -%}
-      {{ get_table_columns_and_constraints() }} ;
-    insert into {{ relation.include(schema=False) }} (
-      {{ adapter.dispatch('get_column_names', 'dbt')() }}
-    )
-    {%- set sql = get_select_subquery(sql) %}
-  {% else %}
-    as
-  {% endif %}
-  (
-    {{ sql }}
-  );
-{%- endmacro %}
-
 {% macro oceanbase_mysql__get_empty_schema_sql(columns) %}
     {%- set col_err = [] -%}
     select
@@ -149,28 +109,3 @@
     rename table {{ from_relation }} to {{ to_relation }}
   {% endcall %}
 {% endmacro %}
-
-{% macro oceanbase_mysql__create_view_as(relation, sql) -%}
-  {%- set sql_header = config.get('sql_header', none) -%}
-  {%- set columns = config.get('columns', none) -%}
-  {%- set check_option = config.get('check_option', none) -%}
-
-  {{ sql_header if sql_header is not none }}
-  create view {{ relation }}
-    {% if columns is not none %}
-      (
-        {{ ", ".join(columns) }}
-      )
-    {% endif %}
-    {% set contract_config = config.get('contract') %}
-    {% if contract_config.enforced %}
-      {{ get_assert_columns_equivalent(sql) }}
-    {%- endif %}
-  as (
-    {{ sql }}
-  )
-  {% if check_option is not none %}
-    {{ check_option }}
-  {% endif %}
-  ;
-{%- endmacro %}
