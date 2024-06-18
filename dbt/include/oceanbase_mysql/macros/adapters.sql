@@ -136,3 +136,17 @@
     external
   {%- endif %} {{ relation }} set comment='{{ comment }}';
 {% endmacro %}
+
+{% macro oceanbase_mysql__rename_relation(from_relation, to_relation) -%}
+  {#
+    2-step process is needed:
+    1. Drop the existing relation
+    2. Rename the new relation to existing relation
+  #}
+  {% call statement('drop_relation') %}
+    drop {{ to_relation.type }} if exists {{ to_relation }} cascade
+  {% endcall %}
+  {% call statement('rename_relation') %}
+    rename table {{ from_relation }} to {{ to_relation }}
+  {% endcall %}
+{% endmacro %}
