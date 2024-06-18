@@ -36,6 +36,8 @@ class TestInit:
         ob_mysql_credentials: OBMySQLCredentials,
     ):
         project_name = "test_init_project"
+        cur_dir = os.getcwd()
+        profiles_dir = os.getcwd()
         try:
             mock_get_adapter.return_value = ["oceanbase_mysql"]
             mock_confirm.return_value = "y"
@@ -52,6 +54,7 @@ class TestInit:
                 args=["init"],
                 **{
                     "project_name": project_name,
+                    "profiles_dir": profiles_dir,
                 },
             )
             assert dbtRunnerResult(success=True) == actual
@@ -77,3 +80,5 @@ class TestInit:
         finally:
             if os.getcwd().endswith(project_name):
                 shutil.rmtree(os.getcwd())
+            os.chdir(cur_dir)
+            os.remove(os.path.join(profiles_dir, "profiles.yml"))
