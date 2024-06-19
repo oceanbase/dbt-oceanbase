@@ -28,13 +28,13 @@ class OBMySQLRelation(BaseRelation):
     # e.g. rename table tbl1 to tbl2 or alter table tbl1 rename to tbl2
     # we just support table
     renameable_relations: SerializableIterable = field(
-        default_factory=lambda: frozenset({RelationType.Table})
+        default_factory=lambda: frozenset({RelationType.Table, RelationType.View})
     )
     # the object that can be replaced
     # e.g. create or replace xxx
     # we just support view and materialized view
     replaceable_relations: SerializableIterable = field(
-        default_factory=lambda: frozenset({RelationType.View, RelationType.MaterializedView})
+        default_factory=lambda: frozenset({RelationType.View})
     )
 
     def replace_path(self, **kwargs):

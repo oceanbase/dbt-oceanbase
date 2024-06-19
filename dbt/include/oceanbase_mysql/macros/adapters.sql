@@ -90,6 +90,9 @@
 {% endmacro %}
 
 {% macro oceanbase_mysql__alter_relation_comment(relation, comment) %}
+  {%- if not relation.is_table -%}
+    {{ exceptions.raise_fail_fast_error(relation.type ~ " do not support setting comment") }}
+  {%- endif -%}
   {%- set external = config.get('external', default=false) -%}
   alter table {%- if external -%}
     external
@@ -109,3 +112,18 @@
     rename table {{ from_relation }} to {{ to_relation }}
   {% endcall %}
 {% endmacro %}
+
+{% macro oceanbase_mysql__get_show_indexes_sql(relation) %}
+    show index from `{{ relation.identifier }}` from `{{ relation.database }}`
+{% endmacro %}
+
+{% macro oceanbase_mysql__list_indexes(relation) %}
+    {% call statement('list_indexes', fetch_result=True, auto_begin=False) %}
+        {{ get_show_indexes_sql(relation) }}
+    {% endcall %}
+    {{ return(load_result('list_indexes').table) }}
+{% endmacro %}
+
+{%- macro oceanbase_mysql__get_drop_index_sql(relation, index_name) -%}
+    drop index `{{ index_name }}` on {{ relation }}
+{%- endmacro -%}

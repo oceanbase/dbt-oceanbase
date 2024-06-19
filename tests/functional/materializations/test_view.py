@@ -59,7 +59,6 @@ models:
       materialized: view
       contract:
         enforced: true
-    description: "this is comment"
     columns:
       - name: id
         quote: True
