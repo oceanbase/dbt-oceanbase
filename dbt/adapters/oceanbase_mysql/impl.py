@@ -149,3 +149,6 @@ class OBMySQLAdapter(SQLAdapter):
             for idx in dest
             if idx not in src
         ]
+
+    def valid_incremental_strategies(self):
+        return ["append", "delete+insert"]
