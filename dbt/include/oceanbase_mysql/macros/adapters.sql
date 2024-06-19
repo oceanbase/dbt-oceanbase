@@ -90,6 +90,9 @@
 {% endmacro %}
 
 {% macro oceanbase_mysql__alter_relation_comment(relation, comment) %}
+  {%- if not relation.is_table -%}
+    {{ exceptions.raise_fail_fast_error(relation.type ~ " do not support setting comment") }}
+  {%- endif -%}
   {%- set external = config.get('external', default=false) -%}
   alter table {%- if external -%}
     external

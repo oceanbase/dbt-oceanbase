@@ -125,8 +125,24 @@ dbt-oceanbase 对表对象进行了针对性的兼容，允许用户最大限度
 
 ### View
 
-| 特性           |是否支持| 使用示例                                              |
-|:-------------|:----|:--------------------------------------------------|
-| contract     | ✅ | ` {{ config(contract={'enforced': True}) }}`      |
-| columns      | ✅ | ` {{ config(columns=['col1', 'col2']) }}`         |
-| check option | ✅ | ` {{ config(check_option="with check option") }}` |
+| 特性           | 是否支持 | 使用示例                                              |
+|:-------------|:-----|:--------------------------------------------------|
+| contract     | ✅    | ` {{ config(contract={'enforced': True}) }}`      |
+| columns      | ✅    | ` {{ config(columns=['col1', 'col2']) }}`         |
+| check option | ✅    | ` {{ config(check_option="with check option") }}` |
+| 表级注释      | ❌   | -                                                 |
+
+### Materialized View
+
+| 特性                      | 是否支持 | 使用示例                                                                                                                                                                            |
+|:------------------------|:-----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| full refresh            | ✅    | ` {{ config(full_refresh=True) }}`                                                                                                                                              |
+| table options           | ✅    | ` {{ config(table_options=["comment='this is a comment'"]) }}`                                                                                                                  |
+| columns                 | ✅    | ` {{ config(columns=['col1', 'col2']) }}`                                                                                                                                       |
+| refresh mode            | ✅    | ` {{ config(refresh_mode="never refresh") }}`                                                                                                                                   |
+| check option            | ✅    | ` {{ config(check_option="with check option") }}`                                                                                                                               |
+| 索引                      | ✅ | `{{ config(indexes=[{"columns": ["id"],"algorithm": "BTREE", "unique": True, "options": ['GLOBAL'], "name": "idx", "column_groups": ['all columns', 'r_name(col1, col2)']}] }}` |
+| on configuration change | ✅    | ` {{ config(on_configuration_change="apply") }}`                                                                                                                                |
+| 表级注释                    | ❌   | -                                                                                                                                                                               |
+
+
