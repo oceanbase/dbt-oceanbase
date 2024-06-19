@@ -40,3 +40,17 @@ jobs:
         run: isort --check .
       - name: Check code format
         run: black --check .
+
+  unit-test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout workspace
+        uses: actions/checkout@v4
+      - name: action by obfarm++ut++COMMIT=${{ github.event.pull_request.head.sha }}
+        uses: ./.github/obfarm/
+        id: unittest
+        with:
+          pipeline_id: ${{ github.run_id }}
+          project: ${{ github.repository }}
+          jobname: db_oceanbase_ut
