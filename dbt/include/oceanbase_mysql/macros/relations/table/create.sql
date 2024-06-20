@@ -5,9 +5,7 @@
 
   {{ sql_header if sql_header is not none }}
 
-  create {% if temporary -%}
-    temporary
-  {%- elif external -%}
+  create {%- if external -%}
     external
   {%- endif %} table {{ relation.include(schema=False) }}
 

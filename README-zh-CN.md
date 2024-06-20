@@ -109,40 +109,52 @@ dbt run
 
 dbt-oceanbase 对表对象进行了针对性的兼容，允许用户最大限度地使用 OceanBase 表地特性。
 
-| 特性        |是否支持| 使用示例                                                                                                                                                                            |
-|:----------|:----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 外表        | ✅ | ` {{ config(external=True) }}`                                                                                                                                                  |
-| 列存        | ✅ | ` {{ config(column_groups=['all columns', 'r_name(col1, col2)']) }}`                                                                                                            |
-| 临时表       | ✅ | ` {{ config(temporary=True) }}`                                                                                                                                                 |
-| contract  | ✅ | ` {{ config(contract={'enforced': True}) }}`                                                                                                                                    |
-| 检查约束（列/表） | ✅ | `constraints.type='check'`                                                                                                                                                      |
-| 非空约束（列/表） | ✅ | `constraints.type='not_null'`                                                                                                                                                   |
-| 唯一约束（列/表） | ✅ | `constraints.type='unique'`                                                                                                                                                     |
-| 主键约束（列/表） | ✅ | `constraints.type='primary_key'`                                                                                                                                                |
-| 外键约束（表）   | ✅ | `constraints.type='foreign_key'`                                                                                                                                                |
-| 表级注释      | ✅ | `models.description='this is the comment'`                                                                                                                                      |
-| 索引        | ✅ | `{{ config(indexes=[{"columns": ["id"],"algorithm": "BTREE", "unique": True, "options": ['GLOBAL'], "name": "idx", "column_groups": ['all columns', 'r_name(col1, col2)']}] }}` |
+| 特性        | 是否支持| 使用示例                                                                                                                                                                            | 说明                        |
+|:----------|:---|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------|
+| 外表        | ✅  | ` {{ config(external=True) }}`                                                                                                                                                  | -                         |
+| 列存        | ✅  | ` {{ config(column_groups=['all columns', 'r_name(col1, col2)']) }}`                                                                                                            | -                         |
+| 临时表       | ❌  | -                                                                                                                                                                               | OceanBase MySQL 模式暂不支持临时表 |
+| contract  | ✅  | ` {{ config(contract={'enforced': True}) }}`                                                                                                                                    | -                         |
+| 检查约束（列/表） | ✅  | `constraints.type='check'`                                                                                                                                                      | -                         |
+| 非空约束（列/表） | ✅  | `constraints.type='not_null'`                                                                                                                                                   | -                         |
+| 唯一约束（列/表） | ✅  | `constraints.type='unique'`                                                                                                                                                     | -                         |
+| 主键约束（列/表） | ✅  | `constraints.type='primary_key'`                                                                                                                                                | -                         |
+| 外键约束（表）   | ✅  | `constraints.type='foreign_key'`                                                                                                                                                | -                         |
+| 表级注释      | ✅  | `models.description='this is the comment'`                                                                                                                                      | -                         |
+| 索引        | ✅  | `{{ config(indexes=[{"columns": ["id"],"algorithm": "BTREE", "unique": True, "options": ['GLOBAL'], "name": "idx", "column_groups": ['all columns', 'r_name(col1, col2)']}] }}` | -                         |
 
 ### View
 
-| 特性           | 是否支持 | 使用示例                                              |
-|:-------------|:-----|:--------------------------------------------------|
-| contract     | ✅    | ` {{ config(contract={'enforced': True}) }}`      |
-| columns      | ✅    | ` {{ config(columns=['col1', 'col2']) }}`         |
-| check option | ✅    | ` {{ config(check_option="with check option") }}` |
-| 表级注释      | ❌   | -                                                 |
+| 特性           | 是否支持 | 使用示例                                              | 说明                                                    |
+|:-------------|:-----|:--------------------------------------------------|:------------------------------------------------------|
+| contract     | ✅    | ` {{ config(contract={'enforced': True}) }}`      | -                                                     |
+| columns      | ✅    | ` {{ config(columns=['col1', 'col2']) }}`         | -                                                     |
+| check option | ✅    | ` {{ config(check_option="with check option") }}` | 可选项：`WITH CHECK OPTION`,`WITH CASCADED CHECK OPTION`,`WITH LOCAL CHECK OPTION` |
+| 表级注释      | ❌   | -                                                 | OceanBase MySQL 模式不支持添加视图注释                           |
 
 ### Materialized View
 
-| 特性                      | 是否支持 | 使用示例                                                                                                                                                                            |
-|:------------------------|:-----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| full refresh            | ✅    | ` {{ config(full_refresh=True) }}`                                                                                                                                              |
-| table options           | ✅    | ` {{ config(table_options=["comment='this is a comment'"]) }}`                                                                                                                  |
-| columns                 | ✅    | ` {{ config(columns=['col1', 'col2']) }}`                                                                                                                                       |
-| refresh mode            | ✅    | ` {{ config(refresh_mode="never refresh") }}`                                                                                                                                   |
-| check option            | ✅    | ` {{ config(check_option="with check option") }}`                                                                                                                               |
-| 索引                      | ✅ | `{{ config(indexes=[{"columns": ["id"],"algorithm": "BTREE", "unique": True, "options": ['GLOBAL'], "name": "idx", "column_groups": ['all columns', 'r_name(col1, col2)']}] }}` |
-| on configuration change | ✅    | ` {{ config(on_configuration_change="apply") }}`                                                                                                                                |
-| 表级注释                    | ❌   | -                                                                                                                                                                               |
+| 特性                      | 是否支持 | 使用示例                                                                                                                                                                            | 说明                                                                                                                                                       |
+|:------------------------|:-----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| full refresh            | ✅    | ` {{ config(full_refresh=True) }}`                                                                                                                                              | 如果设置为 True，当环境中存在同名的物化视图时 dbt 将会删除旧的创建新的；如果设置为 False，dbt 将会对比新旧物化视图，并且将已存在的物化视图转化为新定义的                                                                   |
+| table options           | ✅    | ` {{ config(table_options=["comment='this is a comment'"]) }}`                                                                                                                  | -                                                                                                                                                        |
+| columns                 | ✅    | ` {{ config(columns=['col1', 'col2']) }}`                                                                                                                                       | -                                                                                                                                                        |
+| refresh mode            | ✅    | ` {{ config(refresh_mode="never refresh") }}`                                                                                                                                   | 物化视图刷新选项，可选值：`NEVER REFRESH`, `REFRESH (FAST\|COMPLETE\|FORCE) [ON (DEMAND\|COMMIT\|STATEMENT)] [[START WITH expr][NEXT expr]]`                          |
+| check option            | ✅    | ` {{ config(check_option="with check option") }}`                                                                                                                               | 可选项：`WITH CHECK OPTION`,`WITH CASCADED CHECK OPTION`,`WITH LOCAL CHECK OPTION`                                                                           |
+| 索引                      | ✅ | `{{ config(indexes=[{"columns": ["id"],"algorithm": "BTREE", "unique": True, "options": ['GLOBAL'], "name": "idx", "column_groups": ['all columns', 'r_name(col1, col2)']}] }}` | -                                                                                                                                                        |
+| on configuration change | ✅    | ` {{ config(on_configuration_change="apply") }}`                                                                                                                                | 可选值：`apply`, `continue`, `fail`。该配置项在存在同名物化视图，`full_refresh`为 False 且存在的同名物化视图和新定义的存在差异时有效；`apply`：允许 dbt 将已存在的物化视图转换为新定义中，`continue`：忽略差异，`fail` 及其他：报错 |
+| 表级注释                    | ❌   | -                                                                                                                                                                               | OceanBase MySQL 模式不支持针对物化视图添加注释                                                                                                                          |
 
+### Incremental
 
+物化方式 Incremental 是 Table 的扩展，因此 Incremental 天然支持所有的 Table 支持的特性。在这里我们只列出 Incremental 单独支持的属性配置：
+
+| 特性         | 是否支持 | 使用示例                                                 | 说明                                                                                                                                                                                |
+|:-----------|:-----|:-----------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| unique key | ✅    | ` {{ config(unique_key="id") }}`                     | 只接受字符串类型的值。在 `incremental_strategy` 配置为 `delete+insert` 且环境中存在同名表对象时有效，将作为 where 条件中的唯一键删除已存在表中的数据                                                                                |
+| full refresh            | ✅    | ` {{ config(full_refresh=True) }}`                   | 如果设置为 True，当环境中存在同名的表时 dbt 将会删除旧的创建新的；如果设置为 False，dbt 将会对比新旧表对象，并且将已存在的表修改为新定义的                                                                                                   |
+|on_schema_change| ✅    | ` {{ config(on_schema_change='sync_all_columns') }}` | 可选值：`sync_all_columns`, `append_new_columns`, `fail`, `ignore`。`fail`: 已存在的同名表和新定义的表存在结构差异时报错，`append_new_columns`：已存在的同名表和新定义的表存在结构差异时只新增列，`sync_all_columns`：将已存在的同名表完全转化为新定义的表 |
+|incremental_strategy| ✅    | `{{ config(incremental_strategy='delete+insert') }}` | 可选值：`delete+insert`， `append`，`default`。`append` 以及 `default`：二者意义相同，每次运行时向已存在的表对象中追加全部数据；`delete+insert`：先删除已存在的同名表对象中的数据，再追加全部数据                                                |
+|incremental_predicates|✅| `{{ config(incremental_predicates='a=b and c=d')}}`  | 当 `incremental_strategy` 为 `delete+insert` 有效，将在删除数据过程中辅助过滤数据                                                                                                                     |
+
+物化类型 Incremental 在使用上需要一些技巧才能发挥出它的作用，详细的使用方式详见文档：[https://docs.getdbt.com/docs/build/incremental-models](https://docs.getdbt.com/docs/build/incremental-models)

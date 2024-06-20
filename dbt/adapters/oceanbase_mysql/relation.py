@@ -53,6 +53,13 @@ class OBMySQLRelation(BaseRelation):
                 f"The schema '{path.schema}' is not equals to the database '{path.database}'"
             )
 
+    def information_schema(self, view_name=None):
+        return (
+            super()
+            .information_schema(view_name)
+            .incorporate(path={"schema": None, "database": None})
+        )
+
     def __str__(self) -> str:
         relation = self.include(schema=False)
         return relation.render() if self.limit is None else relation.render_limited()
