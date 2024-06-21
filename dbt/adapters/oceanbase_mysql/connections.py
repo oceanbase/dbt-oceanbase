@@ -16,7 +16,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Any, ContextManager, Dict, Optional, Tuple, Union
 
-import mysql
+import mysql.connector
 from dbt_common.events.contextvars import get_node_info
 from dbt_common.events.functions import fire_event
 from dbt_common.exceptions import DbtRuntimeError
