@@ -152,3 +152,7 @@ class OBMySQLAdapter(SQLAdapter):
 
     def valid_incremental_strategies(self):
         return ["append", "delete+insert"]
+
+    @classmethod
+    def convert_number_type(cls, agate_table: "agate.Table", col_idx: int) -> str:
+        return "float"
