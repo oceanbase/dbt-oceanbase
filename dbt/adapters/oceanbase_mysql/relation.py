@@ -60,9 +60,6 @@ class OBMySQLRelation(BaseRelation):
             .incorporate(path={"schema": None, "database": None})
         )
 
-    def __str__(self) -> str:
+    def render(self) -> str:
         relation = self.include(schema=False)
-        return relation.render() if self.limit is None else relation.render_limited()
-
-    def __repr__(self) -> str:
-        return "<{} {}>".format(self.__class__.__name__, self.include(schema=False).render())
+        return ".".join(part for _, part in relation._render_iterator() if part is not None)
