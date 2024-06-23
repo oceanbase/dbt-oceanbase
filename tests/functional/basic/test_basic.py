@@ -15,6 +15,7 @@ import pytest
 
 from dbt.adapters.base import BaseAdapter
 from dbt.cli.main import dbtRunner, dbtRunnerResult
+from dbt.tests.adapter.basic.test_base import BaseSimpleMaterializations
 from dbt.tests.adapter.basic.test_empty import BaseEmpty
 from tests.functional.utils import BaseOBMySQLTestCase
 
@@ -76,4 +77,8 @@ class TestRunSimpleModel(BaseOBMySQLTestCase):
 
 
 class TestEmpty(BaseEmpty, BaseOBMySQLTestCase):
+    pass
+
+
+class TestSimpleMaterializations(BaseSimpleMaterializations, BaseOBMySQLTestCase):
     pass
