@@ -176,3 +176,14 @@ class OBMySQLAdapter(SQLAdapter):
             raise
         finally:
             conn.transaction_open = False
+
+    def timestamp_add_sql(self, add_to: str, number: int = 1, interval: str = "hour") -> str:
+        return f"{add_to} + interval {number} {interval}"
+
+    def string_add_sql(self, add_to: str, value: str, location="append") -> str:
+        if location == "append":
+            return f"concat({add_to}, '{value}')"
+        elif location == "prepend":
+            return f"concat('{value}', {add_to})"
+        else:
+            raise DbtRuntimeError(f'Got an unexpected location value of "{location}"')
