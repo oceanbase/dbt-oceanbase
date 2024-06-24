@@ -70,7 +70,7 @@ class TestOBMySQLRelation(TestCase):
         r = OBMySQLRelation(self.path)
         self.assertEqual("`dbname`.`tbl`", r.render())
         r = r.include(identifier=False)
-        self.assertEqual("`dbname1`", r.render())
+        self.assertEqual("`dbname`", r.render())
 
     def test_render_exclude_quote_identifier_exclude_succeed(self):
         r = OBMySQLRelation(self.path)
