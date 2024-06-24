@@ -152,3 +152,38 @@ class OBMySQLAdapter(SQLAdapter):
 
     def valid_incremental_strategies(self):
         return ["append", "delete+insert"]
+
+    @classmethod
+    def convert_number_type(cls, agate_table: "agate.Table", col_idx: int) -> str:
+        return "float"
+
+    def run_sql_for_tests(self, sql, fetch, conn):
+        cursor = conn.handle.cursor()
+        try:
+            return_val = None
+            last_cursor = None
+            for item in cursor.execute(sql, multi=True):
+                last_cursor = item
+            if fetch == "one":
+                return_val = last_cursor.fetchone()
+            elif fetch == "all":
+                return_val = last_cursor.fetchall()
+            conn.handle.commit()
+            return return_val
+        except BaseException:
+            if conn.handle and not getattr(conn.handle, "closed", True):
+                conn.handle.rollback()
+            raise
+        finally:
+            conn.transaction_open = False
+
+    def timestamp_add_sql(self, add_to: str, number: int = 1, interval: str = "hour") -> str:
+        return f"{add_to} + interval {number} {interval}"
+
+    def string_add_sql(self, add_to: str, value: str, location="append") -> str:
+        if location == "append":
+            return f"concat({add_to}, '{value}')"
+        elif location == "prepend":
+            return f"concat('{value}', {add_to})"
+        else:
+            raise DbtRuntimeError(f'Got an unexpected location value of "{location}"')
