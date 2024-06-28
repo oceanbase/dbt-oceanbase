@@ -10,6 +10,10 @@
 ```shell
 pip3 install dbt-oceanbase
 ```
+除此之外，本项目还可以通过源代码安装到本地，您需要首先将代码 clone 到本地，然后在项目目录下执行如下 shell 安装 dbt-oceanbase：
+```shell
+pip3 install .
+```
 目前兼容的 [dbt-core](https://github.com/dbt-labs/dbt-core) 最新版本为 1.8.0b2，我们将努力保证 dbt-oceanbase 与 dbt-core 最新版本之间的兼容性。欢迎您给我们提交 [Issues](https://github.com/oceanbase/dbt-oceanbase/issues) 以及 [PR](https://github.com/oceanbase/dbt-oceanbase/pulls)
 
 ## 快速开始
