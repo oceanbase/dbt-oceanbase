@@ -1,13 +1,10 @@
 {% macro oceanbase_mysql__create_table_as(temporary, relation, sql) -%}
-  {%- set external = config.get('external', default=false) -%}
   {%- set sql_header = config.get('sql_header', none) -%}
   {%- set column_groups = config.get('column_groups', none) -%}
 
   {{ sql_header if sql_header is not none }}
 
-  create {%- if external -%}
-    external
-  {%- endif %} table {{ relation.include(schema=False) }}
+  create table {{ relation.include(schema=False) }}
 
   {% if column_groups is not none %}
     with column group (
