@@ -10,6 +10,10 @@
 ```shell
 pip3 install dbt-oceanbase
 ```
+除此之外，本项目还可以通过源代码安装到本地，您需要首先将代码 clone 到本地，然后在项目目录下执行如下 shell 安装 dbt-oceanbase：
+```shell
+pip3 install .
+```
 目前兼容的 [dbt-core](https://github.com/dbt-labs/dbt-core) 最新版本为 1.8.0b2，我们将努力保证 dbt-oceanbase 与 dbt-core 最新版本之间的兼容性。欢迎您给我们提交 [Issues](https://github.com/oceanbase/dbt-oceanbase/issues) 以及 [PR](https://github.com/oceanbase/dbt-oceanbase/pulls)
 
 ## 快速开始
@@ -111,7 +115,6 @@ dbt-oceanbase 对表对象进行了针对性的兼容，允许用户最大限度
 
 | 特性          | 是否支持 | 使用示例                                                                                                                                                                             | 说明                          |
 |:------------|:-----|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------|
-| 外表          | ✅    | `{{ config(external=True) }}`                                                                                                                                                    | -                           |
 | 列存          | ✅    | `{{ config(column_groups=['all columns', 'r_name(col1, col2)']) }}`                                                                                                              | -                           |
 | 临时表         | ❌    | -                                                                                                                                                                                | OceanBase MySQL 模式暂不支持临时表   |
 | contract    | ✅    | `{{ config(contract={'enforced': True}) }}`                                                                                                                                      | -                           |
