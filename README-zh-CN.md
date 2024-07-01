@@ -10,6 +10,7 @@
 ```shell
 pip3 install dbt-oceanbase
 ```
+
 除此之外，本项目还可以通过源代码安装到本地，您需要首先将代码 clone 到本地，然后在项目目录下执行如下 shell 安装 dbt-oceanbase：
 ```shell
 pip3 install .
