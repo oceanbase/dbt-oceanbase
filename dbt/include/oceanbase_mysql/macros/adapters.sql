@@ -94,9 +94,7 @@
     {{ exceptions.raise_fail_fast_error(relation.type ~ " do not support setting comment") }}
   {%- endif -%}
   {%- set external = config.get('external', default=false) -%}
-  alter table {%- if external -%}
-    external
-  {%- endif %} {{ relation }} set comment='{{ comment }}';
+  alter table {{ relation }} set comment='{{ comment }}';
 {% endmacro %}
 
 {% macro oceanbase_mysql__rename_relation(from_relation, to_relation) -%}
