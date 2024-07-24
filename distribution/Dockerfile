@@ -9,10 +9,16 @@ ARG DBT_OCEANBASE_VERSION=0.0.1
 
 RUN pip install dbt-core==${DBT_CORE_VERSION}
 
-RUN mkdir -p dbt-oceanbase && cd dbt-oceanbase
+RUN mkdir -p dbt-oceanbase
 
-COPY ./ ./
+COPY ./ ./dbt-oceanbase
 
-RUN pip install . \
-	&& cd ../ \
-	&& rm -rf dbt-oceanbase
+RUN cd dbt-oceanbase \
+    && pip install . \
+	&& cd ../
+
+USER root
+
+RUN rm -rf dbt-oceanbase
+
+USER airflow
