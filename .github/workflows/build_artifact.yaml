@@ -30,10 +30,10 @@ jobs:
         run: |
           pushd distribution
           docker build -t docker.io/oceanbase/compute:0.0.1 -f Dockerfile .
-          docker save -o resources/obcloud-compute.tar.gz docker.io/oceanbase/compute:0.0.1
+          docker save -o obcloud-compute.tar.gz docker.io/oceanbase/compute:0.0.1
           popd
       - name: Upload docker image (x86_64)
         uses: actions/upload-artifact@v4
         with:
           name: obcloud-compute.tar.gz
-          path: distribution/resources/obcloud-compute.tar.gz
+          path: distribution/obcloud-compute.tar.gz
