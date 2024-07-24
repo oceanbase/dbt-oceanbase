@@ -11,6 +11,14 @@
 name: Build Artifact
 run-name: Build Artifact triggered by ${{ github.actor }} 🛠️
 
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+
 env:
   ODC_CURRENT_BRANCH: ${{ github.ref_name }}
 
