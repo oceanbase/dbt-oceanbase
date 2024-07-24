@@ -19,9 +19,6 @@ on:
     branches:
       - "**"
 
-env:
-  ODC_CURRENT_BRANCH: ${{ github.ref_name }}
-
 jobs:
   build-web-x86_64:
     name: Build Web Artifact (x86_64)
@@ -29,7 +26,7 @@ jobs:
     steps:
       - name: Build docker image (x86_64)
         run: |
-          pushd docker
+          pushd distribution
           docker build -t docker.io/oceanbase/compute:0.0.1 -f Dockerfile .
           docker save -o resources/obcloud-compute.tar.gz docker.io/oceanbase/compute:0.0.1
           popd
@@ -37,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: obcloud-compute.tar.gz
-          path: docker/resources/obcloud-compute.tar.gz
+          path: distribution/resources/obcloud-compute.tar.gz
