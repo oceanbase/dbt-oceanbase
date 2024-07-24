@@ -24,6 +24,8 @@ jobs:
     name: Build Web Artifact (x86_64)
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout workspace
+        uses: actions/checkout@v4
       - name: Build docker image (x86_64)
         run: |
           pushd distribution
