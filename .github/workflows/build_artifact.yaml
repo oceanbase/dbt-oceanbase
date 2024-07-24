@@ -29,7 +29,7 @@ jobs:
       - name: Build docker image (x86_64)
         run: |
           pushd distribution
-          docker build -t docker.io/oceanbase/compute:0.0.1 -f Dockerfile .
+          docker build -t docker.io/oceanbase/compute:0.0.1 -f distribution/Dockerfile .
           docker save -o obcloud-compute.tar.gz docker.io/oceanbase/compute:0.0.1
           popd
       - name: Upload docker image (x86_64)
