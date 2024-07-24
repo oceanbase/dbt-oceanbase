@@ -12,11 +12,11 @@ ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.utf-8
 
 RUN pip install dbt-core==${DBT_CORE_VERSION} \
-	&& pip install 'apache-airflow==2.9.2' --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.2/constraints-3.8.txt"
-	&& git clone https://github.com/oceanbase/dbt-oceanbase.git --branch ${DBT_OCEANBASE_ADAPTER_BRANCH}
-	&& pushd dbt-oceanbase
-	&& pip install .
-	&& popd
+	&& pip install 'apache-airflow==2.9.2' --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.2/constraints-3.8.txt" \
+	&& git clone https://github.com/oceanbase/dbt-oceanbase.git --branch ${DBT_OCEANBASE_ADAPTER_BRANCH} \
+	&& pushd dbt-oceanbase \
+	&& pip install . \
+	&& popd \
 	&& rm -rf dbt-oceanbase
 
 RUN mkdir -p ${AIRFLOW_INSTALL_DIR}
