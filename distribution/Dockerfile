@@ -23,6 +23,6 @@ RUN git clone https://github.com/oceanbase/dbt-oceanbase.git --branch ${DBT_OCEA
 RUN mkdir -p ${AIRFLOW_INSTALL_DIR}
 WORKDIR ${AIRFLOW_INSTALL_DIR}
 
-EXPOSE 8989
+EXPOSE 8080
 
 ENTRYPOINT ["airflow"]
