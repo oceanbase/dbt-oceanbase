@@ -1,5 +1,5 @@
 # The Dockerfile is built for OB Cloud AP
-FROM python:3.8
+FROM apache/airflow:2.9.3-python3.9
 
 LABEL maintainer="ODC <odc@oceanbase.com>"
 LABEL description="OB Cloud compute module"
@@ -11,8 +11,7 @@ ARG DBT_OCEANBASE_ADAPTER_BRANCH=dev/1.0.x
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.utf-8
 
-RUN pip install dbt-core==${DBT_CORE_VERSION} \
-	&& pip install 'apache-airflow==2.9.2' --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.2/constraints-3.8.txt"
+RUN pip install dbt-core==${DBT_CORE_VERSION}
 
 RUN git clone https://github.com/oceanbase/dbt-oceanbase.git --branch ${DBT_OCEANBASE_ADAPTER_BRANCH} \
 	&& cd dbt-oceanbase \
@@ -22,7 +21,3 @@ RUN git clone https://github.com/oceanbase/dbt-oceanbase.git --branch ${DBT_OCEA
 
 RUN mkdir -p ${AIRFLOW_INSTALL_DIR}
 WORKDIR ${AIRFLOW_INSTALL_DIR}
-
-EXPOSE 8080
-
-ENTRYPOINT ["airflow"]
