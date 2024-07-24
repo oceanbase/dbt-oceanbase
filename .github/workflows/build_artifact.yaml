@@ -1,0 +1,32 @@
+###
+# This workflow is used for quickly building artifacts
+# Triggers:
+#   1. Manual trigger
+# Jobs:
+#   1. Calculate Version Number
+#   2. Build Web Artifact
+#   3. Build Client Artifact
+###
+
+name: Build Artifact
+run-name: Build Artifact triggered by ${{ github.actor }} 🛠️
+
+env:
+  ODC_CURRENT_BRANCH: ${{ github.ref_name }}
+
+jobs:
+  build-web-x86_64:
+    name: Build Web Artifact (x86_64)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build docker image (x86_64)
+        run: |
+          pushd docker
+          docker build -t docker.io/oceanbase/compute:0.0.1 -f Dockerfile .
+          docker save -o resources/obcloud-compute.tar.gz docker.io/oceanbase/compute:0.0.1
+          popd
+      - name: Upload docker image (x86_64)
+        uses: actions/upload-artifact@v4
+        with:
+          name: obcloud-compute.tar.gz
+          path: docker/resources/obcloud-compute.tar.gz
