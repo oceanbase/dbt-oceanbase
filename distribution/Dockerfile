@@ -13,7 +13,7 @@ ENV LANG=en_US.utf-8
 
 RUN pip install dbt-core==${DBT_CORE_VERSION}
 
-COPY ../ /root
+COPY ../../ /root
 
 RUN cd /root/dbt-oceanbase \
 	&& pip install . \
