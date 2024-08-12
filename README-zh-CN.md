@@ -103,8 +103,8 @@ dbt run
 | Table               | ✅    | -    |
 | View                | ✅    | -    |
 | Incremental         | ✅    | -    |
-| Epheneral           | ✅    | -    |
-| Materializaed View  | ✅    | -    |
+| Ephemeral           | ✅    | -    |
+| Materialized View  | ✅    | -    |
 | Docs                | ✅    | 生成文档 |
 | Seed                | ✅    | 导入数据 |
 | Snapshot            | ✅    | 生成快照 |
