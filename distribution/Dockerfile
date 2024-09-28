@@ -21,7 +21,7 @@ USER root
 
 RUN rm -rf dbt-oceanbase
 
-COPY bootstrap_airflow.sh /usr/local/bin/bootstrap_airflow.sh
+COPY distribution/bootstrap_airflow.sh /usr/local/bin/bootstrap_airflow.sh
 
 RUN chmod +x /usr/local/bin/bootstrap_airflow.sh
 
