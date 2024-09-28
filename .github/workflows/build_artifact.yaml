@@ -28,8 +28,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Build docker image (x86_64)
         run: |
-          docker build -t docker.io/oceanbase/compute:0.0.1 -f distribution/Dockerfile .
-          docker save -o obcloud-compute.tar.gz docker.io/oceanbase/compute:0.0.1
+          docker build -t docker.io/oceanbase/compute:0.0.4 -f distribution/Dockerfile .
+          docker save -o obcloud-compute.tar.gz docker.io/oceanbase/compute:0.0.4
       - name: Upload docker image (x86_64)
         uses: actions/upload-artifact@v4
         with:
