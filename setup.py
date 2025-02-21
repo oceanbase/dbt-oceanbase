@@ -37,7 +37,7 @@ with open(os.path.join(this_directory, "README.md")) as f:
 
 def _dbt_oceanbase_version():
     _version_path = os.path.join(
-        this_directory, "dbt", "adapters", "oceanbase_mysql", "__version__.py"
+        this_directory, "dbt", "adapters", "obmysql", "__version__.py"
     )
     _version_pattern = r"""version\s*=\s*["'](.+)["']"""
     with open(_version_path) as f:

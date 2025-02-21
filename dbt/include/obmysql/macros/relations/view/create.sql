@@ -1,4 +1,4 @@
-{% macro oceanbase_mysql__create_view_as(relation, sql) -%}
+{% macro obmysql__create_view_as(relation, sql) -%}
   {{ get_create_or_replace_view_as(relation, sql, False) }}
 {%- endmacro %}
 

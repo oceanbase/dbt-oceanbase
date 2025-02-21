@@ -34,8 +34,8 @@ from dbt.adapters.sql import SQLConnectionManager
 
 log = AdapterLogger("OceanBase")
 
-OBMySQL_DIALECT_TYPE = "oceanbase_mysql"
-OBOracle_DIALECT_TYPE = "oceanbase_oracle"
+OBMySQL_DIALECT_TYPE = "obmysql"
+OBOracle_DIALECT_TYPE = "oboracle"
 
 
 @dataclass

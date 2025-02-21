@@ -23,9 +23,9 @@ from dbt_common.exceptions import DbtRuntimeError, DbtValidationError
 from dbt.adapters.base import BaseConnectionManager, BaseRelation
 from dbt.adapters.base import Column as BaseColumn
 from dbt.adapters.base import ConstraintSupport, available
-from dbt.adapters.oceanbase_mysql.column import OBMySQLColumn
-from dbt.adapters.oceanbase_mysql.connections import OBMySQLConnectionManager
-from dbt.adapters.oceanbase_mysql.relation import OBMySQLRelation
+from dbt.adapters.obmysql.column import OBMySQLColumn
+from dbt.adapters.obmysql.connections import OBMySQLConnectionManager
+from dbt.adapters.obmysql.relation import OBMySQLRelation
 from dbt.adapters.relation_configs import RelationConfigChangeAction
 from dbt.adapters.sql import SQLAdapter
 
@@ -118,7 +118,7 @@ class OBMySQLAdapter(SQLAdapter):
     @available
     def list_indexes(self, relation: BaseRelation) -> List[OBMySQLIndex]:
         results = self.execute_macro(
-            "oceanbase_mysql__list_indexes", kwargs={"relation": relation}
+            "obmysql__list_indexes", kwargs={"relation": relation}
         )
         relations = []
         for idx_name, items in itertools.groupby(results, lambda item: item["Key_name"]):

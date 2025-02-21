@@ -1,4 +1,4 @@
-{% macro oceanbase_mysql__get_catalog(information_schema, schemas) -%}
+{% macro obmysql__get_catalog(information_schema, schemas) -%}
     {%- call statement('catalog', fetch_result=True) -%}
     select
         columns.table_database,

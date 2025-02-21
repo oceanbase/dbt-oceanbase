@@ -14,7 +14,7 @@
 from typing import Any, Dict
 from unittest import TestCase
 
-from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
+from dbt.adapters.obmysql.connections import OBMySQLCredentials
 
 
 class TestOBMySQLCredentials(TestCase):

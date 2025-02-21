@@ -20,7 +20,7 @@ import time
 import mysql.connector
 import pytest
 
-from dbt.adapters.oceanbase_mysql.connections import OBMySQLCredentials
+from dbt.adapters.obmysql.connections import OBMySQLCredentials
 from dbt.cli.main import dbtRunner
 
 OB_MYSQL_TEST_HOST_KEY = "OB_MYSQL_TEST_HOST"

@@ -1,4 +1,4 @@
-{% macro oceanbase_mysql__get_materialized_view_configuration_changes(existing_relation, new_config) %}
+{% macro obmysql__get_materialized_view_configuration_changes(existing_relation, new_config) %}
     {% set _indexes = config.get('indexes', default=[]) %}
     {% set _config_indexes = [] %}
     {% set _existing_indexes = adapter.list_indexes(existing_relation) %}
@@ -11,7 +11,7 @@
     {% do return(_configuration_changes) %}
 {% endmacro %}
 
-{% macro oceanbase_mysql__get_alter_materialized_view_as_sql(
+{% macro obmysql__get_alter_materialized_view_as_sql(
     relation,
     configuration_changes,
     sql,

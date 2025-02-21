@@ -2,7 +2,7 @@ default:
   outputs:
 
     dev:
-      type: oceanbase_mysql
+      type: obmysql
       threads: [1 or more]
       host: [host]
       port: [port]
@@ -11,7 +11,7 @@ default:
       dbname: [dbname]
 
     prod:
-      type: oceanbase_mysql
+      type: obmysql
       threads: [1 or more]
       host: [host]
       port: [port]
