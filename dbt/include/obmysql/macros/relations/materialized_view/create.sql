@@ -1,4 +1,4 @@
-{% macro oceanbase_mysql__get_create_materialized_view_as_sql(relation, sql) %}
+{% macro obmysql__get_create_materialized_view_as_sql(relation, sql) %}
     {%- set columns = config.get('columns', none) -%}
     {%- set table_options = config.get('table_options', none) -%}
     {%- set refresh_mode = config.get('refresh_mode', none) -%}

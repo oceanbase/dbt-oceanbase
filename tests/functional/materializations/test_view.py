@@ -17,7 +17,7 @@ import pytest
 
 from dbt.adapters.base import BaseAdapter, BaseRelation
 from dbt.adapters.contracts.relation import RelationType
-from dbt.adapters.oceanbase_mysql.relation import OBMySQLRelation
+from dbt.adapters.obmysql.relation import OBMySQLRelation
 from dbt.tests.adapter.column_types.test_column_types import run_dbt
 from tests.functional.utils import BaseOBMySQLTestCase
 

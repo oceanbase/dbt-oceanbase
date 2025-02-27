@@ -18,7 +18,7 @@ from dbt_common.exceptions import DbtRuntimeError
 
 from dbt.adapters.contracts.relation import Path
 from dbt.adapters.exceptions import ApproximateMatchError
-from dbt.adapters.oceanbase_mysql.relation import OBMySQLRelation
+from dbt.adapters.obmysql.relation import OBMySQLRelation
 
 
 class TestOBMySQLRelation(TestCase):

@@ -25,7 +25,7 @@ pip3 install .
 ```shell
 dbt init ${your project name}
 ```
-您可以在交互式菜单中选择 oceanbase_mysql 来创建一个项目以在 OceanBase 上进行开发：
+您可以在交互式菜单中选择 obmysql 来创建一个项目以在 OceanBase 上进行开发：
 ```shell
 13:32:20  Running with dbt=1.8.0-b2
 ...
@@ -34,7 +34,7 @@ Happy modeling!
 13:32:27  Setting up your profile.
 Which database would you like to use?
 [1] postgres
-[2] oceanbase_mysql
+[2] obmysql
 ```
 
 ### 配置您的 Profile
@@ -44,7 +44,7 @@ Profile 文件用于配置 dbt 项目，它将告诉 dbt-core 如何连接到 Oc
 default:
   outputs:
     dev:
-      type: oceanbase_mysql
+      type: obmysql
       threads: 1
       host: 127.0.0.1
       port: 2881
@@ -57,7 +57,7 @@ default:
 
 | 选项      | 描述                                                  | 是否必须        | 举例                      |
 |:--------|:----------------------------------------------------|:------------|:------------------------|
-| type    | dbt 插件的名称，枚举值。只接受 oceanbase_mysql                   | 是           | oceanbase_mysql         |
+| type    | dbt 插件的名称，枚举值。只接受 obmysql                   | 是           | obmysql         |
 | threads | 运行最大线程数，选填，默认为 1                                    | 否           | 1                       |
 | host    | 数据库所在的 host 地址                                      | 是           | 127.0.0.1               |
 | port    | 数据库所在的端口号                                           | 是           | 2881                    |
@@ -79,7 +79,7 @@ dbt run
 如您看到如下输出，说明项目已经配置和运行成功：
 ```shell
 13:39:29  Running with dbt=1.8.0-b2
-13:39:30  Registered adapter: oceanbase_mysql=1.0.0
+13:39:30  Registered adapter: obmysql=1.0.0
 13:39:30  Found 2 models, 4 data tests, 1 snapshot, 411 macros
 13:39:30  
 13:39:32  Concurrency: 1 threads (target='dev')

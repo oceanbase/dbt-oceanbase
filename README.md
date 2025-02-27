@@ -30,7 +30,7 @@ You can initialize your dbt project using the following shell command:
 dbt init ${your_project_name}
 ```
 
-During the setup, select `oceanbase_mysql` to create a project for development on OceanBase:
+During the setup, select `obmysql` to create a project for development on OceanBase:
 
 ```shell
 13:32:20    Running with dbt=1.8.0-b2
@@ -40,7 +40,7 @@ Happy modeling!
 13:32:27    Setting up your profile.
 Which database would you like to use?
 [1] postgres
-[2] oceanbase_mysql
+[2] obmysql
 ```
 
 ### Configure Your Profile
@@ -51,7 +51,7 @@ The `Profile` file configures your dbt project, guiding dbt-core on how to conne
 default:
     outputs:
         dev:
-            type: oceanbase_mysql
+            type: obmysql
             threads: 1
             host: 127.0.0.1
             port: 2881
@@ -64,7 +64,7 @@ default:
 
 | Option  | Description                      | Required | Example                                          |
 |---------|-----------------------|----------|-----------------------------|
-| type    | The dbt plugin name, enumerated value. Only `oceanbase_mysql` is accepted.    | Yes            | oceanbase_mysql                          |
+| type    | The dbt plugin name, enumerated value. Only `obmysql` is accepted.    | Yes            | obmysql                          |
 | threads | Maximum number of threads to run, optional, default is 1.                                      | No              | 1                                                      |
 | host    | The host address where the database is located.                                                          | Yes            | 127.0.0.1                                      |
 | port    | The port number where the database is located.                                                            | Yes            | 2881                                                |
@@ -92,7 +92,7 @@ If you see the following output, it indicates that the project has been successf
 
 ```shell
 13:39:29    Running with dbt=1.8.0-b2
-13:39:30    Registered adapter: oceanbase_mysql=1.0.0
+13:39:30    Registered adapter: obmysql=1.0.0
 13:39:30    Found 2 models, 4 data tests, 1 snapshot, 411 macros
 13:39:30    
 13:39:32    Concurrency: 1 threads (target='dev')

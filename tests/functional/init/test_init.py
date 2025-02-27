@@ -17,7 +17,7 @@ import unittest.mock
 
 import yaml
 
-from dbt.adapters.oceanbase_mysql import OBMySQLCredentials
+from dbt.adapters.obmysql import OBMySQLCredentials
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 from dbt.flags import get_flags
 
@@ -39,7 +39,7 @@ class TestInit:
         cur_dir = os.getcwd()
         profiles_dir = os.getcwd()
         try:
-            mock_get_adapter.return_value = ["oceanbase_mysql"]
+            mock_get_adapter.return_value = ["obmysql"]
             mock_confirm.return_value = "y"
             mock_prompt.side_effect = [
                 1,
@@ -69,7 +69,7 @@ class TestInit:
                             "pass": ob_mysql_credentials.password,
                             "threads": 1,
                             "user": ob_mysql_credentials.user,
-                            "type": "oceanbase_mysql",
+                            "type": "obmysql",
                             "port": ob_mysql_credentials.port,
                             "database": ob_mysql_credentials.database,
                         }

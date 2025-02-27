@@ -23,7 +23,7 @@ from dbt.adapters.contracts.connection import (
     Credentials,
     HasCredentials,
 )
-from dbt.adapters.oceanbase_mysql.connections import (
+from dbt.adapters.obmysql.connections import (
     OBMySQLConnectionManager,
     OBMySQLCredentials,
 )

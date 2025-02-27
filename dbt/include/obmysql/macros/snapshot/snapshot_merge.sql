@@ -1,4 +1,4 @@
-{% macro oceanbase_mysql__snapshot_merge_sql(target, source, insert_cols) -%}
+{% macro obmysql__snapshot_merge_sql(target, source, insert_cols) -%}
   {%- set insert_cols_csv = insert_cols | join(', ') -%}
 
   update

@@ -1,4 +1,4 @@
-{% macro oceanbase_mysql__create_table_as(temporary, relation, sql) -%}
+{% macro obmysql__create_table_as(temporary, relation, sql) -%}
   {%- set sql_header = config.get('sql_header', none) -%}
   {%- set column_groups = config.get('column_groups', none) -%}
 

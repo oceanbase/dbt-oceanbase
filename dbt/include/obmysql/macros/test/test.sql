@@ -1,4 +1,4 @@
-{% macro oceanbase_mysql__get_test_sql(main_sql, fail_calc, warn_if, error_if, limit) -%}
+{% macro obmysql__get_test_sql(main_sql, fail_calc, warn_if, error_if, limit) -%}
     select
       {{ fail_calc }} as failures,
       case
