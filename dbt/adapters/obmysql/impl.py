@@ -117,9 +117,7 @@ class OBMySQLAdapter(SQLAdapter):
 
     @available
     def list_indexes(self, relation: BaseRelation) -> List[OBMySQLIndex]:
-        results = self.execute_macro(
-            "obmysql__list_indexes", kwargs={"relation": relation}
-        )
+        results = self.execute_macro("obmysql__list_indexes", kwargs={"relation": relation})
         relations = []
         for idx_name, items in itertools.groupby(results, lambda item: item["Key_name"]):
             kwargs = {"name": idx_name}
