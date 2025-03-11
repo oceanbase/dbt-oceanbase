@@ -28,6 +28,7 @@ OB_MYSQL_TEST_PORT_KEY = "OB_MYSQL_TEST_PORT"
 OB_MYSQL_TEST_USER_KEY = "OB_MYSQL_TEST_USER"
 OB_MYSQL_TEST_PASSWD_KEY = "OB_MYSQL_TEST_PASSWD"
 OB_MYSQL_TEST_DATABASE_KEY = "OB_MYSQL_TEST_DATABASE"
+OB_MYSQL_TEST_SSLCA_KEY = "OB_MYSQL_TEST_SSLCA"
 
 pytest_plugins = ["dbt.tests.fixtures.project"]
 
@@ -45,6 +46,9 @@ def ob_mysql_credentials() -> OBMySQLCredentials:
     kwargs.update({"user": os.getenv(OB_MYSQL_TEST_USER_KEY)})
     kwargs.update({"password": os.getenv(OB_MYSQL_TEST_PASSWD_KEY)})
     kwargs.update({"database": os.getenv(OB_MYSQL_TEST_DATABASE_KEY)})
+    ssl_ca_path = os.getenv(OB_MYSQL_TEST_SSLCA_KEY)
+    if ssl_ca_path is not None:
+        kwargs.update({"ssl_ca": ssl_ca_path})
     for v in kwargs.values():
         assert v is not None
     database = generate_tmp_schema_name()
@@ -75,6 +79,7 @@ def ob_mysql_connection(ob_mysql_credentials: OBMySQLCredentials):
         "user": ob_mysql_credentials.user,
         "passwd": ob_mysql_credentials.password,
         "database": ob_mysql_credentials.database,
+        "ssl_ca": ob_mysql_credentials.ssl_ca,
     }
     conn = mysql.connector.connect(**kwargs)
     yield conn
