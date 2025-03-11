@@ -73,14 +73,14 @@ class TestInit:
                             "type": "obmysql",
                             "port": ob_mysql_credentials.port,
                             "database": ob_mysql_credentials.database,
-                            "ssl_ca": ob_mysql_credentials.ssl_ca
+                            "ssl_ca": ob_mysql_credentials.ssl_ca,
                         }
                     },
                     "target": "dev",
                 }
                 assert expect == actual
         finally:
-            init_project_path=os.path.join(cur_dir,project_name)
+            init_project_path = os.path.join(cur_dir, project_name)
             if os.path.exists(init_project_path):
                 shutil.rmtree(init_project_path)
             os.chdir(cur_dir)
