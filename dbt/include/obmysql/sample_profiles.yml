@@ -9,6 +9,7 @@ default:
       user: [dev_username]
       pass: [dev_password]
       dbname: [dbname]
+      ssl_ca: [optional,path to ca cert]
 
     prod:
       type: obmysql
@@ -18,5 +19,6 @@ default:
       user: [prod_username]
       pass: [prod_password]
       dbname: [dbname]
+      ssl_ca: [optional,path to ca cert]
 
   target: dev

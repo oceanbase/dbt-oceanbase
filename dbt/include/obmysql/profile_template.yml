@@ -16,3 +16,6 @@ prompts:
     hint: '1 or more'
     type: 'int'
     default: 1
+  ssl_ca:
+    hint: 'ssl ca path'
+    default: ''

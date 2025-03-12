@@ -49,6 +49,7 @@ class TestInit:
                 ob_mysql_credentials.password,
                 ob_mysql_credentials.database,
                 1,
+                ob_mysql_credentials.ssl_ca,
             ]
             actual = dbt.invoke(
                 args=["init"],
@@ -72,13 +73,15 @@ class TestInit:
                             "type": "obmysql",
                             "port": ob_mysql_credentials.port,
                             "database": ob_mysql_credentials.database,
+                            "ssl_ca": ob_mysql_credentials.ssl_ca,
                         }
                     },
                     "target": "dev",
                 }
                 assert expect == actual
         finally:
-            if os.getcwd().endswith(project_name):
-                shutil.rmtree(os.getcwd())
+            init_project_path = os.path.join(cur_dir, project_name)
+            if os.path.exists(init_project_path):
+                shutil.rmtree(init_project_path)
             os.chdir(cur_dir)
             os.remove(os.path.join(profiles_dir, "profiles.yml"))

@@ -47,6 +47,7 @@ class OBMySQLCredentials(Credentials):
     password: str
     connect_timeout_seconds = 10
     retries: int = 1
+    ssl_ca: str = ""
 
     # schema and database is confusing for developer which are concepts for postgres
     # postgresql can get multi databases and each database can get multi schemas
@@ -58,6 +59,7 @@ class OBMySQLCredentials(Credentials):
         "username": "user",
         "connect_timeout": "connect_timeout_seconds",
         "retry_times": "retries",
+        "sslca": "ssl_ca",
     }
 
     @property
@@ -81,6 +83,7 @@ class OBMySQLCredentials(Credentials):
             "schema",
             "database",
             "connect_timeout_seconds",
+            "ssl_ca",
         )
 
     def __post_init__(self):
@@ -136,6 +139,8 @@ class OBMySQLConnectionManager(SQLConnectionManager):
         kwargs["database"] = credentials.database
         kwargs["port"] = credentials.port
         kwargs["connection_timeout"] = credentials.connect_timeout_seconds
+        if credentials.ssl_ca and credentials.ssl_ca.strip():
+            kwargs["ssl_ca"] = credentials.ssl_ca
 
         conn: Connection = cls.retry_connection(
             connection,
