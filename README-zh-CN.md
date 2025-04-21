@@ -79,7 +79,7 @@ dbt run
 如您看到如下输出，说明项目已经配置和运行成功：
 ```shell
 13:39:29  Running with dbt=1.8.0-b2
-13:39:30  Registered adapter: obmysql=1.0.0
+13:39:30  Registered adapter: obmysql=1.0.1
 13:39:30  Found 2 models, 4 data tests, 1 snapshot, 411 macros
 13:39:30  
 13:39:32  Concurrency: 1 threads (target='dev')
